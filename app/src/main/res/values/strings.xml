@@ -7,7 +7,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Jobs fragment</string>
+    <string name="jobs_fragment">Jobs Fragment</string>
+    <string name="people_fragment">People Fragment</string>
 
     <!-- Menu titles -->
     <string name="menu_resume_title">Resume</string>
