@@ -5,4 +5,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Jobs fragment</string>
+
+    <!-- Menu titles -->
+    <string name="menu_resume_title">Resume</string>
+    <string name="menu_following_title">Following</string>
+    <string name="menu_follower_title">Follower</string>
+    <string name="menu_favorite_title">Favorite</string>
 </resources>
