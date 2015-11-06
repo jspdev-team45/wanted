@@ -19,16 +19,16 @@ public class PeopleDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_people_detail);
 
         findViews();
         initViews();
     }
 
     private void findViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        imageView = (ImageView) findViewById(R.id.backdrop);
+        toolbar = (Toolbar) findViewById(R.id.people_detail_toolbar);
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.people_detail_collapsing_toolbar);
+        imageView = (ImageView) findViewById(R.id.people_detail_backdrop);
     }
 
     private void initViews() {

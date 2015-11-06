@@ -1,6 +1,7 @@
 package com.wanted.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.action.TextViewAction;
+import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
@@ -41,6 +43,7 @@ public class JobFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_jobs, container, false);
         findViews(view);
         addCards();
+        addListeners();
         return view;
     }
 
@@ -70,6 +73,19 @@ public class JobFragment extends Fragment {
         }
     }
 
+    private void addListeners() {
+        jobListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(Card card, int position) {
+                Intent intent = new Intent(getActivity(), JobDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(Card card, int position) {
+            }
+        });
+    }
 
 }

@@ -33,11 +33,11 @@
 
     <!--Detail Page-->
     <string name="basic_info_title">Basic Information</string>
-    <string name="basic_info_detail">Carnegie Mellon University</string>
+    <string name="basic_info_detail">This is basic information basic information basic information</string>
     <string name="contact_info_title">Contact Information</string>
-    <string name="contact_info_detail">Email: john@andrew.cmu.edu</string>
+    <string name="contact_info_detail">Email: email@andrew.cmu.edu</string>
     <string name="other_info_title">Other Information</string>
-    <string name="other_info_detail">I am from Canada I am from Canada I am from Canada.</string>
+    <string name="other_info_detail">Other information Other information Other information Other</string>
 
     <!--Login Page-->
     <string name="title_activity_login">Sign in</string>
@@ -55,4 +55,7 @@
 
     <!--Favorite Page-->
     <string name="title_activity_favorite">Favorite Jobs</string>
+
+    <!--Profile Page-->
+    <string name="title_activity_profile">My profile</string>
 </resources>

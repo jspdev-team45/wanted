@@ -1,15 +1,16 @@
 package com.wanted.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.wanted.R;
 
@@ -32,6 +35,10 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ImageView avatar;
+
+    private final int rHeight = 225;
+    private final int rWidth = 225;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,34 +47,62 @@ public class MainActivity extends AppCompatActivity
 
         findViews();
         initViews();
+        addListeners();
     }
 
     private void findViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.people_detail_toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        avatar = (ImageView) findViewById(R.id.avatarImageView);
     }
 
     private void initViews() {
+        // tool bar
         setSupportActionBar(toolbar);
 
+        // drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // navigation view
         navigationView.setNavigationItemSelectedListener(this);
 
+        // view pager
         setupViewPager(viewPager);
 
+        // tab layout
         tabLayout.setupWithViewPager(viewPager);
+
+        // avatar
+        avatar.setImageDrawable(resize(R.drawable.avatar));
+    }
+
+    private void addListeners() {
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private Drawable resize(int drawable) {
+        Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), drawable);
+
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, rWidth, rHeight, false);
+
+        Drawable ret = new BitmapDrawable(getResources(), resizedBitmap);
+        return ret;
     }
 
     @Override
     public void onBackPressed() {
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

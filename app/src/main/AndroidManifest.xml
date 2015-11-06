@@ -32,11 +32,19 @@
         <activity
             android:name=".ui.PeopleDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.FavoriteActivity"
+        <activity
+            android:name=".ui.JobDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.FavoriteActivity"
             android:label="@string/title_activity_favorite">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
+        </activity>
+        <activity android:name=".ui.MyProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

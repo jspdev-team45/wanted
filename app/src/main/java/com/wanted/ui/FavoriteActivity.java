@@ -1,5 +1,6 @@
 package com.wanted.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.action.TextViewAction;
+import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
@@ -26,6 +28,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         findViews();
         addCards();
+        addListeners();
     }
 
     private void findViews() {
@@ -49,6 +52,21 @@ public class FavoriteActivity extends AppCompatActivity {
 
             jobListView.getAdapter().add(card);
         }
+    }
+
+    private void addListeners() {
+        jobListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(Card card, int position) {
+                Intent intent = new Intent(getApplicationContext(), JobDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(Card card, int position) {
+            }
+        });
     }
 
     @Override
