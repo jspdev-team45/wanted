@@ -15,4 +15,24 @@
     <string name="menu_following_title">Following</string>
     <string name="menu_follower_title">Follower</string>
     <string name="menu_favorite_title">Favorite</string>
+
+    <!--Job Page-->
+    <string name="company_google">Google</string>
+    <string name="company_facebook">Facebook</string>
+
+    <!--People Page-->
+    <string name="people_john">John</string>
+    <string name="people_tom">Tom</string>
+    <string name="people_mike">Mike</string>
+    <string name="school_john">Carnegie Mellon University</string>
+    <string name="school_tom">Pittsburgh University</string>
+    <string name="school_mike">Duke University</string>
+
+    <!--Detail Page-->
+    <string name="basic_info_title">Basic Information</string>
+    <string name="basic_info_detail">Carnegie Mellon University</string>
+    <string name="contact_info_title">Contact Information</string>
+    <string name="contact_info_detail">Email: john@andrew.cmu.edu</string>
+    <string name="other_info_title">Other Information</string>
+    <string name="other_info_detail">I am from Canada I am from Canada I am from Canada.</string>
 </resources>

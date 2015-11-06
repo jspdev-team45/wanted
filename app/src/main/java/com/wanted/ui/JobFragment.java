@@ -15,12 +15,15 @@ import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
-
 /**
  *
  */
 public class JobFragment extends Fragment {
-    MaterialListView jobListView;
+    private MaterialListView jobListView;
+    private int[] companys = new int[]{R.string.company_google, R.string.company_facebook};
+    private String[] descriptions = new String[]{"We are looking for a new software engineer",
+                                                  "Looking for a front end engineer"};
+    private int[] drawables = new int[]{R.drawable.google, R.drawable.facebook};
 
     public JobFragment() {
         // Required empty public constructor
@@ -46,23 +49,25 @@ public class JobFragment extends Fragment {
     }
 
     private void addCards() {
-        Card card = new Card.Builder(getActivity())
-                            .setTag("Image Button Card")
-                            .withProvider(new CardProvider())
-                            .setLayout(R.layout.material_image_with_buttons_card)
-                            .setTitle("DOG")
-                            .setSubtitle("DOGDOG")
-                            .setDescription("This is a dog")
-                            .setDrawable(R.drawable.dog)
-                            .addAction(R.id.right_text_button, new TextViewAction(getActivity())
-                                    .setText("Apply")
-                                    .setTextColor(Color.BLUE))
-                            .addAction(R.id.left_text_button, new TextViewAction(getActivity())
-                                    .setText("Like")
-                                    .setTextColor(Color.BLACK))
-                            .endConfig()
-                            .build();
-        jobListView.getAdapter().add(card);
+        for (int i = 0; i < 2; ++i) {
+            Card card = new Card.Builder(getActivity())
+                    .withProvider(new CardProvider())
+                    .setLayout(R.layout.material_image_with_buttons_card)
+                    .setTitle(companys[i])
+                    .setTitleColor(Color.WHITE)
+                    .setDescription(descriptions[i])
+                    .setDrawable(drawables[i])
+                    .addAction(R.id.right_text_button, new TextViewAction(getActivity())
+                            .setText("Apply")
+                            .setTextColor(Color.BLUE))
+                    .addAction(R.id.left_text_button, new TextViewAction(getActivity())
+                            .setText("Like")
+                            .setTextColor(Color.BLACK))
+                    .endConfig()
+                    .build();
+
+            jobListView.getAdapter().add(card);
+        }
     }
 
 
