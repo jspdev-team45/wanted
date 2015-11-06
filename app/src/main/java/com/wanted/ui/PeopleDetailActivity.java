@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wanted.R;
 
-public class DetailActivity extends AppCompatActivity {
+public class PeopleDetailActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
@@ -41,6 +42,17 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         Glide.with(this).load(R.drawable.people_john).centerCrop().into(imageView);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

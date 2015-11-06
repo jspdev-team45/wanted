@@ -97,7 +97,7 @@ public class PeopleFragment extends Fragment {
 
             @Override
             public void onItemClick(Card card, int position) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                Intent intent = new Intent(getActivity(), PeopleDetailActivity.class);
                 startActivity(intent);
             }
 
