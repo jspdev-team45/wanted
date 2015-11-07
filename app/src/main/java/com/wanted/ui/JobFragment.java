@@ -18,7 +18,7 @@ import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
 /**
- *
+ * Created by xlin2
  */
 public class JobFragment extends Fragment {
     private MaterialListView jobListView;
@@ -28,7 +28,6 @@ public class JobFragment extends Fragment {
     private int[] drawables = new int[]{R.drawable.google, R.drawable.facebook};
 
     public JobFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -47,10 +46,17 @@ public class JobFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Get ui objects
+     * @param view
+     */
     private void findViews(View view) {
         jobListView = (MaterialListView) view.findViewById(R.id.job_listview);
     }
 
+    /**
+     * Add cards to the card list
+     */
     private void addCards() {
         for (int i = 0; i < 2; ++i) {
             Card card = new Card.Builder(getActivity())
@@ -73,6 +79,9 @@ public class JobFragment extends Fragment {
         }
     }
 
+    /**
+     * Add listeners to ui objects
+     */
     private void addListeners() {
         jobListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
 

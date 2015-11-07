@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private TextView registerText;
@@ -22,11 +25,17 @@ public class LoginActivity extends AppCompatActivity {
         addListeners();
     }
 
+    /**
+     * Get ui objects
+     */
     private void findViews() {
         loginBtn = (Button) findViewById(R.id.login_btn);
         registerText = (TextView) findViewById(R.id.txt_register);
     }
 
+    /**
+     * Add listeners to ui objects
+     */
     private void addListeners() {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

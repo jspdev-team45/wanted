@@ -27,6 +27,9 @@ import com.wanted.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by xlin2
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity
         addListeners();
     }
 
+    /**
+     * Get ui objects
+     */
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.people_detail_toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,6 +65,9 @@ public class MainActivity extends AppCompatActivity
         avatar = (ImageView) findViewById(R.id.avatarImageView);
     }
 
+    /**
+     * Do some initializations on ui objects
+     */
     private void initViews() {
         // tool bar
         setSupportActionBar(toolbar);
@@ -82,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         avatar.setImageDrawable(resize(R.drawable.avatar));
     }
 
+    /**
+     * Add listeners to ui objects
+     */
     private void addListeners() {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +104,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Resize an image
+     * @param drawable
+     * @return
+     */
     private Drawable resize(int drawable) {
         Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), drawable);
 
@@ -142,9 +159,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ResumeActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_following) {
-
+            Intent intent = new Intent(this, FollowingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_follower) {
-
+            Intent intent = new Intent(this, FollowerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this, FavoriteActivity.class);
             startActivity(intent);

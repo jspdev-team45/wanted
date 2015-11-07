@@ -13,6 +13,9 @@ import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class FavoriteActivity extends AppCompatActivity {
 
     private MaterialListView jobListView;
@@ -35,6 +38,9 @@ public class FavoriteActivity extends AppCompatActivity {
         jobListView = (MaterialListView) findViewById(R.id.favorite_job_listview);
     }
 
+    /**
+     * Add cards into the card list
+     */
     private void addCards() {
         for (int i = 0; i < 2; ++i) {
             Card card = new Card.Builder(this)

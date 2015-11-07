@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class JobDetailActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbar;
@@ -25,12 +28,18 @@ public class JobDetailActivity extends AppCompatActivity {
         initViews();
     }
 
+    /**
+     * Get ui objects
+     */
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.job_detail_toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.job_detail_collapsing_toolbar);
         imageView = (ImageView) findViewById(R.id.job_detail_backdrop);
     }
 
+    /**
+     * Do some initializtions
+     */
     private void initViews() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -6,6 +6,9 @@ import android.view.MenuItem;
 
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class ChatActivity extends AppCompatActivity {
 
     @Override
