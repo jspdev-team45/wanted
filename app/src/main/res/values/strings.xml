@@ -62,4 +62,7 @@
     <!--Chat Page-->
     <string name="title_activity_chat">Chat Room</string>
     <string name="send_btn_string">Send</string>
+
+    <!--Resume Page-->
+    <string name="title_activity_resume">Resume</string>
 </resources>
