@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class RegisterActivity extends AppCompatActivity {
     private Button registerBtn;
     private TextView loginText;

@@ -21,7 +21,7 @@ import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
 /**
- *
+ * Created by xlin2
  */
 public class PeopleFragment extends Fragment {
     private MaterialListView peopleListView;

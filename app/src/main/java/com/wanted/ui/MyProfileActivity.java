@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class MyProfileActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbar;

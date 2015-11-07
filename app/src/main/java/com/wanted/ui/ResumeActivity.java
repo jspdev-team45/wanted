@@ -11,6 +11,9 @@ import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ */
 public class ResumeActivity extends AppCompatActivity {
 
     private MaterialListView resume;
