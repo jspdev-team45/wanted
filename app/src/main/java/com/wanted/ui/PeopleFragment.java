@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
@@ -72,7 +73,8 @@ public class PeopleFragment extends Fragment {
                     .setDrawable(resize(drawables[i]))
                     .addAction(R.id.right_text_button, new TextViewAction(getActivity())
                             .setText("Chat")
-                            .setTextColor(Color.BLUE))
+                            .setTextColor(Color.BLUE)
+                            .setListener(chatListener))
                     .addAction(R.id.left_text_button, new TextViewAction(getActivity())
                             .setText("Follow")
                             .setTextColor(Color.BLACK))
@@ -91,6 +93,14 @@ public class PeopleFragment extends Fragment {
         Drawable ret = new BitmapDrawable(getResources(), resizedBitmap);
         return ret;
     }
+
+    private OnActionClickListener chatListener = new OnActionClickListener() {
+        @Override
+        public void onActionClicked(View view, Card card) {
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            startActivity(intent);
+        }
+    };
 
     private void addListeners() {
         peopleListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {

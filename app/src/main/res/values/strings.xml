@@ -58,4 +58,8 @@
 
     <!--Profile Page-->
     <string name="title_activity_profile">My profile</string>
+
+    <!--Chat Page-->
+    <string name="title_activity_chat">Chat Room</string>
+    <string name="send_btn_string">Send</string>
 </resources>
