@@ -47,6 +47,7 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+<<<<<<< Updated upstream
             android:name=".ui.ChatActivity"
             android:label="@string/title_activity_chat">
             <meta-data
@@ -59,6 +60,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
+=======
+            android:name=".ui.FollowingActivity"
+            android:label="@string/title_activity_following"></activity>
+        <activity
+            android:name=".ui.FollowerActivity"
+            android:label="@string/title_activity_follower"></activity>
+>>>>>>> Stashed changes
     </application>
 
 </manifest>

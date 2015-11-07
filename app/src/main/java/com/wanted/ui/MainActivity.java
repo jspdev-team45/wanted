@@ -1,10 +1,13 @@
 package com.wanted.ui;
 
 import android.content.Intent;
+<<<<<<< Updated upstream
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+=======
+>>>>>>> Stashed changes
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -142,9 +145,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ResumeActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_following) {
-
+            Intent intent = new Intent(getApplicationContext(), FollowingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_follower) {
-
+            Intent intent = new Intent(getApplicationContext(), FollowerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this, FavoriteActivity.class);
             startActivity(intent);

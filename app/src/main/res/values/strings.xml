@@ -53,6 +53,7 @@
     <string name="prompt_name">Name</string>
     <string name="action_register">Register</string>
 
+<<<<<<< Updated upstream
     <!--Favorite Page-->
     <string name="title_activity_favorite">Favorite Jobs</string>
 
@@ -65,4 +66,23 @@
 
     <!--Resume Page-->
     <string name="title_activity_resume">Resume</string>
+=======
+    <!--Following Page-->
+    <string name="title_activity_following">Following</string>
+    <string-array name="names_following">
+        <item >Mike</item>
+        <item >John</item>
+        <item >Ann</item>
+        <item >Mary</item>
+    </string-array>
+
+    <!--Follower Page-->
+    <string name="title_activity_follower">Follower</string>
+    <string-array name="names_follower">
+        <item >Rose</item>
+        <item >Tom</item>
+        <item >Keith</item>
+        <item >Joan</item>
+    </string-array>
+>>>>>>> Stashed changes
 </resources>
