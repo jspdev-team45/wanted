@@ -1,10 +1,6 @@
 package com.wanted.ui;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wanted.R;
+import com.wanted.util.ResizeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +36,6 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ImageView avatar;
-
-    private final int rHeight = 225;
-    private final int rWidth = 225;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         // avatar
-        avatar.setImageDrawable(resize(R.drawable.avatar));
+        avatar.setImageDrawable(new ResizeUtil().resizeAvatar(this, R.drawable.avatar));
     }
 
     /**
@@ -102,20 +96,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-    }
-
-    /**
-     * Resize an image
-     * @param drawable
-     * @return
-     */
-    private Drawable resize(int drawable) {
-        Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), drawable);
-
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, rWidth, rHeight, false);
-
-        Drawable ret = new BitmapDrawable(getResources(), resizedBitmap);
-        return ret;
     }
 
     @Override

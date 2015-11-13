@@ -1,11 +1,13 @@
 package com.wanted.entities;
 
+import java.io.Serializable;
+
 /**
  * Author: Junjian Xie
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/12
  */
-public class Experience {
+public class Experience implements Serializable {
     private String startYear;
     private String startMonth;
     private String startDay;

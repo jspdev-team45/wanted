@@ -1,19 +1,21 @@
 package com.wanted.entities;
 
+import java.io.Serializable;
+
 /**
  * Author: Junjian Xie
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/12
  */
-public abstract class User {
+public abstract class User implements Serializable {
     private String email;
     private String name;
     private String passWord;
     private String avatar;
-    private boolean role;
+    private Integer role;
     private String realName;
 
-    public User(String email, String passWord, String name, boolean role) {
+    public User(String email, String passWord, String name, Integer role) {
         this.email = email;
         this.passWord = passWord;
         this.name = name;
@@ -52,11 +54,11 @@ public abstract class User {
         this.avatar = avatar;
     }
 
-    public boolean isRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(boolean role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 

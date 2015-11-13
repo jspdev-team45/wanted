@@ -39,6 +39,12 @@
     <string name="other_info_title">Other Information</string>
     <string name="other_info_detail">Other information Other information Other information Other</string>
 
+    <!--Error Information-->
+    <string name="error_invalid_email">Invalid Email</string>
+    <string name="error_invalid_password">The password is too short</string>
+    <string name="error_incorrect_password">Email or password incorrect</string>
+    <string name="error_field_required">Required</string>
+
     <!--Login Page-->
     <string name="title_activity_login">Sign in</string>
     <string name="create_account">Register</string>

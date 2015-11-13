@@ -19,14 +19,13 @@ import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
+import com.wanted.util.ResizeUtil;
 
 /**
  * Created by xlin2
  */
 public class PeopleFragment extends Fragment {
     private MaterialListView peopleListView;
-    private final int rHeight = 300;
-    private final int rWidth = 300;
     private int[] names = new int[]{R.string.people_john, R.string.people_tom, R.string.people_mike};
     private int[] schools = new int[]{R.string.school_john, R.string.school_tom, R.string.school_mike};
     private int[] drawables = new int[]{R.drawable.people_john,
@@ -70,7 +69,7 @@ public class PeopleFragment extends Fragment {
                     .setTitle(names[i])
                     .setTitleColor(Color.BLACK)
                     .setDescription(schools[i])
-                    .setDrawable(resize(drawables[i]))
+                    .setDrawable(new ResizeUtil().resizePeople(getActivity(), drawables[i]))
                     .addAction(R.id.right_text_button, new TextViewAction(getActivity())
                             .setText("Chat")
                             .setTextColor(Color.BLUE)
@@ -85,14 +84,7 @@ public class PeopleFragment extends Fragment {
         }
     }
 
-    private Drawable resize(int drawable) {
-        Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), drawable);
 
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, rWidth, rHeight, false);
-
-        Drawable ret = new BitmapDrawable(getResources(), resizedBitmap);
-        return ret;
-    }
 
     private OnActionClickListener chatListener = new OnActionClickListener() {
         @Override

@@ -1,11 +1,13 @@
 package com.wanted.entities;
 
+import java.io.Serializable;
+
 /**
  * Author: Junjian Xie
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/12
  */
-public class Company {
+public class Company implements Serializable {
     private String logo;
     private String description;
     private String location;
