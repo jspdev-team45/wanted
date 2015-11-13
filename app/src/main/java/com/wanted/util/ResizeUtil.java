@@ -60,13 +60,8 @@ public class ResizeUtil {
             width = 600;
             height = 600;
         } else if (swidth > LARGE) {
-<<<<<<< HEAD
             width = 400;
             height = 400;
-=======
-            width = 300;
-            height = 300;
->>>>>>> e7a1b3a18e3bc9f574fdd52cf8a77b377a91436a
         } else {
             width = 250;
             height = 250;
