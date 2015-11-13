@@ -60,11 +60,11 @@ public class ResizeUtil {
             width = 600;
             height = 600;
         } else if (swidth > LARGE) {
+            width = 400;
+            height = 400;
+        } else {
             width = 300;
             height = 300;
-        } else {
-            width = 250;
-            height = 250;
         }
 
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
