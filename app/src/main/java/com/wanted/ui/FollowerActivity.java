@@ -1,10 +1,8 @@
 package com.wanted.ui;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 
 import com.wanted.R;
@@ -25,7 +23,7 @@ public class FollowerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follower);
+        setContentView(R.layout.ui_activity_follower);
         initFollower();
         FollowerAdapter adapter = new FollowerAdapter(FollowerActivity.this,
                 R.layout.follower_item, followerList);

@@ -22,7 +22,7 @@ public class PeopleDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_people_detail);
+        setContentView(R.layout.ui_activity_people_detail);
 
         findViews();
         initViews();

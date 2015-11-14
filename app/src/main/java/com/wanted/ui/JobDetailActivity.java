@@ -22,7 +22,7 @@ public class JobDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_detail);
+        setContentView(R.layout.ui_activity_job_detail);
 
         findViews();
         initViews();
