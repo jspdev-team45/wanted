@@ -41,9 +41,10 @@
 
     <!--Error Information-->
     <string name="error_invalid_email">Invalid Email</string>
-    <string name="error_invalid_password">The password is too short</string>
+    <string name="error_invalid_password">Length between 6 to 14</string>
     <string name="error_incorrect_password">Email or password incorrect</string>
     <string name="error_field_required">Required</string>
+    <string name="error_empty_input">Input should not be empty</string>
 
     <!--Login Page-->
     <string name="title_activity_login">Sign in</string>

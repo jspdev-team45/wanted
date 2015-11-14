@@ -13,6 +13,6 @@ public class ValidateUserInfo {
     }
 
     public static boolean isPasswordValid(String password) {
-        return password.length() > 6;
+        return password.length() >= 6 && password.length() <= 14;
     }
 }

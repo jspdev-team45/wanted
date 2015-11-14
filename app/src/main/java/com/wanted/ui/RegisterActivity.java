@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.wanted.R;
 import com.wanted.entities.Pack;
 import com.wanted.entities.Seeker;
+import com.wanted.util.DialogUtil;
 import com.wanted.util.ValidateUserInfo;
+import com.wanted.ws.remote.CheckNetwork;
 import com.wanted.ws.remote.DefaultSocketClient;
 import com.wanted.entities.Information;
 
@@ -60,8 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 doRegister();
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
             }
         });
 
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void doRegister() {
-        boolean cancel = checkValid();
+        boolean cancel = formValid();
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first form field with an error.
@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkValid() {
+    private boolean formValid() {
         boolean cancel = false;
         ValidateUserInfo validate = new ValidateUserInfo();
 
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            // SHOW THE SPINNER WHILE LOADING FEEDS
+            // Show the spinner and disable interaction
             progressLayout.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                                  WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -147,23 +147,31 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: check if account already exists against a network service.
-            checkExist();
-
-            // TODO: if there's no account registered, register the new account here.
-            DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
-            response = client.sendToServer(packData());
-
-            return true;
+            if (new CheckNetwork().isConnected(RegisterActivity.this)) {
+                // If there's no account registered, register the new account here.
+                DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
+                response = client.sendToServer(packData());
+                return true;
+            }
+            else {
+                new DialogUtil().showError(RegisterActivity.this, "Network not connected.");
+                return false;
+            }
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
+            // Cancel the progress spinner and enable interaction
             progressLayout.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             registerTask = null;
 
-            if (response != null)
+            // Update ui
+            if (response == null)
+                new DialogUtil().showError(RegisterActivity.this, "Unable to register.");
+            else if (response.getInfo().equals(Information.FAIL))
+                new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
+            else
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
@@ -172,8 +180,6 @@ public class RegisterActivity extends AppCompatActivity {
             registerTask = null;
         }
 
-        private void checkExist() {
-        }
     }
 
     private Pack packData() {

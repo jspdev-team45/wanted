@@ -80,7 +80,6 @@ public class DefaultSocketClient implements SocketClientInterface, SocketClientC
 			// ask user to enter command
 			sendOutput(request);
 			response = (Pack) reader.readObject();
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAaaaa");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -90,47 +89,6 @@ public class DefaultSocketClient implements SocketClientInterface, SocketClientC
 
 		return response;
 	}
-
-	/**
-	 * According to user input, do the corresponding jobs
-	 */
-//	@SuppressWarnings({ "resource", "unchecked" })
-//	private void handleInput(String userInput) throws IOException, ClassNotFoundException {
-//		CarModelOptionsIO io = new CarModelOptionsIO();
-//		Scanner scanner = new Scanner(System.in);
-//
-//		// user wants to upload a Properties object
-//		if (userInput.equalsIgnoreCase("U")) {
-//			printString("Please input your file path.");
-//			String filename = scanner.nextLine();
-//			Properties prop = io.BuildPropertiesFromFile(filename);
-//			sendOutput(prop);
-//			printString((String) reader.readObject());
-//		}
-//
-//		// user wants to configure a Automobile instance
-//		else if (userInput.equalsIgnoreCase("C")) {
-//			sendOutput("configuration");
-//			ArrayList<String> modelList = (ArrayList<String>) reader.readObject();
-//
-//			// print list of Automobile names
-//			printString("Here is the model list that you can configure:");
-//			for (String name : modelList)
-//				printString("--" + name);
-//			printString("Please select one:");
-//			String modelName = scanner.nextLine();
-//			sendOutput(modelName);
-//
-//			// receive Automobile instance and let user to configure it
-//			Automobile auto = (Automobile) reader.readObject();
-//			if (auto == null) printString("Invalid model name!");
-//			else io.selectCarOptions(auto);
-//		}
-//
-//		else {
-//			printString("Please enter 'U' for upload or 'C' for configuration");
-//		}
-//	}
 
 	/**
 	 * Send object to server 

@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Date: 15/11/12
  */
 public abstract class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String email;
     private String name;
     private String passWord;

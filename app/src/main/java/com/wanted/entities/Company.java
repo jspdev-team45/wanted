@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Date: 15/11/12
  */
 public class Company implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String logo;
     private String description;
     private String location;
