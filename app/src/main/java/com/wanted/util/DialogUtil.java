@@ -8,6 +8,11 @@ import android.content.DialogInterface;
  * Created by xlin2 on 2015/11/13.
  */
 public class DialogUtil {
+    /**
+     * Show dialogs with given message
+     * @param context
+     * @param msg
+     */
     public void showError(Context context, String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Error");

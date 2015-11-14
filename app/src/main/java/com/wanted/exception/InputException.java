@@ -3,7 +3,7 @@ package com.wanted.exception;
 import android.util.Log;
 
 /**
- * Created by GIGABYTE on 2015/11/13.
+ * Created by xlin2 on 2015/11/13.
  */
 public class InputException extends Exception {
     private int errNo;

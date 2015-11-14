@@ -20,13 +20,14 @@ public class ResizeUtil {
     private final int XLARGE = 1500;
 
     /**
-     * Resize an image
+     * Resize an avatar image
      * @param drawable
      * @return
      */
     public Drawable resizeAvatar(Context context, int drawable) {
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
 
+        // Get screen size
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -34,6 +35,7 @@ public class ResizeUtil {
         int width;
         int height;
 
+        // Changed size
         if (swidth > LARGE) {
             width = 225;
             height = 225;
@@ -42,13 +44,21 @@ public class ResizeUtil {
             height = 150;
         }
 
+        // Resize
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, width, height, false);
 
         Drawable ret = new BitmapDrawable(context.getResources(), resizedBitmap);
         return ret;
     }
 
+    /**
+     * Resize people image
+     * @param context
+     * @param drawable
+     * @return
+     */
     public Drawable resizePeople(Context context, int drawable) {
+        // Get screen size
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -56,6 +66,7 @@ public class ResizeUtil {
         int width;
         int height;
 
+        // Changed size
         if (swidth > XLARGE) {
             width = 600;
             height = 600;
@@ -67,6 +78,7 @@ public class ResizeUtil {
             height = 300;
         }
 
+        // Resize
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
 
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, width, height, false);

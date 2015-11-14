@@ -11,6 +11,11 @@ import android.net.NetworkInfo;
  */
 public class CheckNetwork {
 
+    /**
+     * Check whether network is connected
+     * @param context
+     * @return
+     */
     public boolean isConnected(Context context){
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
