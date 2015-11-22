@@ -69,7 +69,7 @@ public class PeopleFragment extends Fragment {
                     .setTitle(names[i])
                     .setTitleColor(Color.BLACK)
                     .setDescription(schools[i])
-                    .setDrawable(new ResizeUtil().resizePeople(getActivity(), drawables[i]))
+                    .setDrawable(new ResizeUtil(getActivity()).resizePeople(drawables[i]))
                     .addAction(R.id.right_text_button, new TextViewAction(getActivity())
                             .setText("Chat")
                             .setTextColor(Color.BLUE)

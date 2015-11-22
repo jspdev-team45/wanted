@@ -7,22 +7,31 @@ import java.io.Serializable;
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/12
  */
-public abstract class User implements Serializable {
+public abstract class User implements Serializable, Comparable<User> {
     private static final long serialVersionUID = 1L;
-    private String email;
+    private int id;
     private String name;
     private String passWord;
+    private String email;
     private String avatar;
     private Integer role;
     private String realName;
 
-    public User(String email, String passWord, String name, Integer role) {
+    public User(String name, String passWord, String email, Integer role) {
         this.email = email;
         this.passWord = passWord;
         this.name = name;
         this.role = role;
     }
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
     public String getEmail() {
         return email;
     }
@@ -69,5 +78,10 @@ public abstract class User implements Serializable {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    @Override
+    public int compareTo(User another) {
+        return this.getName().compareTo(another.getName());
     }
 }

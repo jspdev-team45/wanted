@@ -19,19 +19,27 @@ public class ResizeUtil {
     private final int LARGE = 1000;
     private final int XLARGE = 1500;
 
+    private int swidth;
+    private Context context;
+
+    public ResizeUtil(Context context) {
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        this.swidth = size.x;
+
+        this.context = context;
+    }
+
     /**
      * Resize an avatar image
      * @param drawable
      * @return
      */
-    public Drawable resizeAvatar(Context context, int drawable) {
+    public Drawable resizeAvatar(int drawable) {
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
 
-        // Get screen size
-        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int swidth = size.x;
+        // New width and height
         int width;
         int height;
 
@@ -53,16 +61,10 @@ public class ResizeUtil {
 
     /**
      * Resize people image
-     * @param context
      * @param drawable
      * @return
      */
-    public Drawable resizePeople(Context context, int drawable) {
-        // Get screen size
-        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int swidth = size.x;
+    public Drawable resizePeople(int drawable) {
         int width;
         int height;
 
@@ -85,5 +87,15 @@ public class ResizeUtil {
 
         Drawable ret = new BitmapDrawable(context.getResources(), resizedBitmap);
         return ret;
+    }
+
+    public int sideBarSize() {
+        if (swidth > XLARGE) {
+            return 50;
+        } else if (swidth > LARGE) {
+            return 35;
+        } else {
+            return 20;
+        }
     }
 }

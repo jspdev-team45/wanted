@@ -39,7 +39,7 @@ public class InputException extends Exception {
         this.errMsg = errMsg;
     }
 
-    public void handleEmpty() {
+    public void handle() {
         Log.e("Input Exception", this.toString());
         switch(errNo) {
             case 0:

@@ -2,15 +2,15 @@ package com.wanted.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.wanted.R;
-import com.wanted.list.Follower;
-import com.wanted.list.FollowerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.wanted.list.Constants;
+import com.wanted.list.ListAdapter;
+import com.wanted.list.SideBar;
 
 /**
  * Author: Junjian Xie
@@ -18,28 +18,25 @@ import java.util.List;
  * Date: 15/11/6
  */
 public class FollowerActivity extends AppCompatActivity {
-    private List<Follower> followerList = new ArrayList<Follower>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ui_activity_follower);
-        initFollower();
-        FollowerAdapter adapter = new FollowerAdapter(FollowerActivity.this,
-                R.layout.follower_item, followerList);
-        ListView listView = (ListView) findViewById(R.id.list_follower);
+        setContentView(R.layout.ui_activity_follow);
+        final ListAdapter adapter = new ListAdapter(this, new Constants().followerArray);
+        final ListView listView = (ListView) findViewById(R.id.list_follow);
         listView.setAdapter(adapter);
-    }
-
-    private void initFollower() {
-        Follower rose = new Follower("Rose", R.drawable.people_rose);
-        followerList.add(rose);
-        Follower tom = new Follower("Tom", R.drawable.people_tom);
-        followerList.add(tom);
-        Follower keith = new Follower("Keith", R.drawable.people_keith);
-        followerList.add(keith);
-        Follower joan = new Follower("Joan", R.drawable.people_joan);
-        followerList.add(joan);
+        SideBar sideBar = (SideBar) findViewById(R.id.follow_sidebar);
+        TextView dialog = (TextView) findViewById(R.id.follow_dialog);
+        sideBar.setTextView(dialog);
+        sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+            @Override
+            public void onTouchingLetterChanged(String s) {
+                int position = adapter.getPositionForSection(s.charAt(0));
+                if (position != -1)
+                    listView.setSelection(position);
+            }
+        });
     }
 
     @Override

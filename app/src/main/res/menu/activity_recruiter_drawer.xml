@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_posts"
+            android:icon="@drawable/ic_menu_post"
+            android:title="@string/menu_post_title" />
+        <item
+            android:id="@+id/nav_following"
+            android:icon="@drawable/ic_menu_group1"
+            android:title="@string/menu_following_title" />
+        <item
+            android:id="@+id/nav_follower"
+            android:icon="@drawable/ic_menu_group2"
+            android:title="@string/menu_follower_title" />
+    </group>
+
+
+</menu>

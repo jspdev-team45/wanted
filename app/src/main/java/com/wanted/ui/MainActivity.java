@@ -17,12 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wanted.R;
+import com.wanted.entities.Role;
+import com.wanted.entities.User;
 import com.wanted.util.ResizeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.wanted.R;
 
 /**
  * Created by xlin2
@@ -37,14 +43,25 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private ImageView avatar;
 
+    private User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_activity_main);
 
+        getDataFromActivity();
         findViews();
         initViews();
         addListeners();
+    }
+
+    public void getDataFromActivity() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            user = (User) extras.get("User");
+            Toast.makeText(this, "Id is " + user.getId(), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -73,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // navigation view
+        setNavMenu();
         navigationView.setNavigationItemSelectedListener(this);
 
         // view pager
@@ -82,7 +100,22 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         // avatar
-        avatar.setImageDrawable(new ResizeUtil().resizeAvatar(this, R.drawable.avatar));
+        avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar));
+
+        // image loader
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+    private void setNavMenu() {
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(R.menu.activity_recruiter_drawer);
+        if (user != null) {
+            if (user.getRole() == Role.RECRUITER) {
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_recruiter_drawer);
+            }
+        }
     }
 
     /**
@@ -146,6 +179,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_favorite) {
             Intent intent = new Intent(this, FavoriteActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_posts) {
+            Intent intent = new Intent(this, PostActivity.class);
             startActivity(intent);
         }
 

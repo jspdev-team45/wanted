@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 throw new InputException(ErrType.INVALID_PASSWORD);
             ret = true;
         } catch (InputException e) {
-            e.handleEmpty();
+            e.handle();
             new DialogUtil().showError(LoginActivity.this, e.getErrMsg());
         }
         return ret;

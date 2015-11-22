@@ -16,6 +16,7 @@
     <string name="menu_following_title">Following</string>
     <string name="menu_follower_title">Follower</string>
     <string name="menu_favorite_title">Favorite</string>
+    <string name="menu_post_title">Posts</string>
 
     <!--Job Page-->
     <string name="company_google">Google</string>
@@ -59,6 +60,8 @@
     <string name="already_registered">Already have an account? Sign in</string>
     <string name="prompt_name">Name</string>
     <string name="action_register">Register</string>
+    <string name="text_is_seeker">I am a seeker</string>
+    <string name="text_is_recruiter">I am a recuiter</string>
 
     <!--Favorite Page-->
     <string name="title_activity_favorite">Favorite Jobs</string>
@@ -76,18 +79,21 @@
     <!--Following Page-->
     <string name="title_activity_following">Following</string>
     <string-array name="names_following">
-        <item >Mike</item>
-        <item >John</item>
-        <item >Ann</item>
-        <item >Mary</item>
+        <item>Mike</item>
+        <item>John</item>
+        <item>Ann</item>
+        <item>Mary</item>
     </string-array>
 
     <!--Follower Page-->
     <string name="title_activity_follower">Follower</string>
     <string-array name="names_follower">
-        <item >Rose</item>
-        <item >Tom</item>
-        <item >Keith</item>
-        <item >Joan</item>
+        <item>Rose</item>
+        <item>Tom</item>
+        <item>Keith</item>
+        <item>Joan</item>
     </string-array>
+
+    <!--Post Page-->
+    <string name="title_activity_post">My Posts</string>
 </resources>

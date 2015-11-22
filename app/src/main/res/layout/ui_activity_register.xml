@@ -123,6 +123,28 @@
                         android:textColorHint="@color/grey_0" />
                 </android.support.design.widget.TextInputLayout>
 
+                <RadioGroup
+                    android:id="@+id/role_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/role_seeker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dp"
+                        android:text="@string/text_is_seeker"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/role_recruiter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_is_recruiter"/>
+                </RadioGroup>
+
                 <Button
                     android:id="@+id/register_btn"
                     style="?android:textAppearanceSmall"

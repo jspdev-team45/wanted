@@ -10,17 +10,17 @@ import java.util.List;
  * Date: 15/11/12
  */
 public class Seeker extends User implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String college;
+	private static final long serialVersionUID = 1L;
+	private String college;
     private String major;
     private String skill;
     private List<Experience> experiences;
 
-    public Seeker(String email, String passWord, String name, Integer role) {
-        super(email, passWord, name, role);
+    public Seeker(String name, String passWord, String email, Integer role) {
+        super(name, passWord, email, role);
         this.experiences = new ArrayList<Experience>();
     }
-
+    
     public String getEmail() {
         return super.getEmail();
     }
@@ -42,7 +42,7 @@ public class Seeker extends User implements Serializable {
     }
 
     public void setPassWord(String passWord) {
-        super.setPassWord(passWord);
+    	super.setPassWord(passWord);
     }
 
     public String getAvatar() {
@@ -100,4 +100,5 @@ public class Seeker extends User implements Serializable {
     public void setExperiences(List<Experience> experiences) {
         this.experiences = experiences;
     }
+
 }

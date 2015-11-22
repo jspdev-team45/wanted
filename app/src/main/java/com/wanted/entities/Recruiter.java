@@ -12,10 +12,10 @@ public class Recruiter extends User implements Serializable {
     private String company;
     private String department;
 
-    public Recruiter(String email, String passWord, String name, Integer role) {
-        super(email, passWord, name, role);
+    public Recruiter(String name, String passWord, String email, Integer role) {
+        super(name, passWord, email, role);
     }
-
+    
     public String getEmail() {
         return super.getEmail();
     }
@@ -37,7 +37,7 @@ public class Recruiter extends User implements Serializable {
     }
 
     public void setPassWord(String passWord) {
-        super.setPassWord(passWord);
+    	super.setPassWord(passWord);
     }
 
     public String getAvatar() {
@@ -63,7 +63,7 @@ public class Recruiter extends User implements Serializable {
     public void setRealName(String realName) {
         super.setRealName(realName);
     }
-
+    
     public String getCompany() {
         return company;
     }

@@ -10,11 +10,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.wanted.R;
 import com.wanted.entities.Pack;
+import com.wanted.entities.Recruiter;
+import com.wanted.entities.Role;
 import com.wanted.entities.Seeker;
+import com.wanted.entities.User;
 import com.wanted.util.DialogUtil;
 import com.wanted.util.ValidateUserInfo;
 import com.wanted.ws.remote.CheckNetwork;
@@ -32,12 +36,15 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView loginText;
     private View focusView;
     private LinearLayout progressLayout;
+    private RadioGroup roleSelect;
 
     private RegisterTask registerTask = null;
 
     private String name;
     private String email;
     private String password;
+    private int role;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn = (Button) findViewById(R.id.register_btn);
         loginText = (TextView) findViewById(R.id.txt_already_have);
         progressLayout = (LinearLayout) findViewById(R.id.layout_progress);
+        roleSelect = (RadioGroup) findViewById(R.id.role_select);
     }
 
     private void addListeners() {
@@ -171,8 +179,11 @@ public class RegisterActivity extends AppCompatActivity {
                 new DialogUtil().showError(RegisterActivity.this, "Unable to register.");
             else if (response.getInfo().equals(Information.FAIL))
                 new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
-            else
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            else {
+                user.setId(((User)(response.getContent())).getId());
+                jumpTo(MainActivity.class);
+            }
+
         }
 
         @Override
@@ -183,9 +194,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private Pack packData() {
-        Seeker seeker = new Seeker(email, password, name, 0);
-        Pack ret = new Pack(Information.REGISTER, seeker);
+        role = roleSelect.getCheckedRadioButtonId();
+        if (role == R.id.role_seeker) {
+            role = Role.SEEKER;
+            user = new Seeker(email, password, name, role);
+        }
+        else {
+            role = Role.RECRUITER;
+            user = new Recruiter(email, password, name, role);
+        }
+        Pack ret = new Pack(Information.REGISTER, user);
 
         return ret;
+    }
+
+    private void jumpTo(Class<?> target) {
+        Intent intent = new Intent(getApplicationContext(), target);
+        intent.putExtra("User", user);
+        startActivity(intent);
     }
 }
