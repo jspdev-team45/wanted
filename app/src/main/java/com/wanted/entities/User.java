@@ -91,6 +91,6 @@ public abstract class User implements Serializable, Comparable<User> {
 
     @Override
     public int compareTo(User another) {
-        return this.getName().compareTo(another.getName());
+        return this.getName().toLowerCase().compareTo(another.getName().toLowerCase());
     }
 }
