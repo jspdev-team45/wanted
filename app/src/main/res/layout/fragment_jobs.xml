@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.JobFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.dexafree.materialList.view.MaterialListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

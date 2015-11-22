@@ -34,9 +34,14 @@
 
     <!--Detail Page-->
     <string name="basic_info_title">Basic Information</string>
-    <string name="basic_info_detail">This is basic information basic information basic information</string>
+    <string name="basic_info_name">NAME: </string>
+    <string name="basic_info_college">COLLEGE: </string>
+    <string name="basic_info_major">MAJOR: </string>
+    <string name="basic_info_company">COMPANY: </string>
+    <string name="basic_info_department">DEPART: </string>
     <string name="contact_info_title">Contact Information</string>
-    <string name="contact_info_detail">Email: email@andrew.cmu.edu</string>
+    <string name="contact_info_email">EMAIL: </string>
+    <string name="contact_info_phone">PHONE: </string>
     <string name="other_info_title">Other Information</string>
     <string name="other_info_detail">Other information Other information Other information Other</string>
 
@@ -96,4 +101,7 @@
 
     <!--Post Page-->
     <string name="title_activity_post">My Posts</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

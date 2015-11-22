@@ -78,8 +78,7 @@
                     <TextView
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/basic_info_detail"/>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -108,8 +107,7 @@
                     <TextView
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/contact_info_detail"/>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 

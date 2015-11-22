@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wanted.R;
 import com.wanted.entities.Pack;
@@ -19,6 +20,7 @@ import com.wanted.entities.Recruiter;
 import com.wanted.entities.Role;
 import com.wanted.entities.Seeker;
 import com.wanted.entities.User;
+import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
 import com.wanted.util.ValidateUserInfo;
 import com.wanted.ws.remote.CheckNetwork;
@@ -83,6 +85,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void doRegister() {
+        // check network connection
+        if (new CheckNetwork().isConnected(RegisterActivity.this) == false) {
+            Toast.makeText(RegisterActivity.this, "Network not connected", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         boolean cancel = formValid();
 
         if (cancel) {
@@ -155,16 +163,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (new CheckNetwork().isConnected(RegisterActivity.this)) {
-                // If there's no account registered, register the new account here.
-                DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
-                response = client.sendToServer(packData());
-                return true;
-            }
-            else {
-                new DialogUtil().showError(RegisterActivity.this, "Network not connected.");
-                return false;
-            }
+            // If there's no account registered, register the new account here.
+            DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
+            response = client.sendToServer(packData());
+            return true;
         }
 
         @Override
@@ -181,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
             else {
                 user.setId(((User)(response.getContent())).getId());
+                DataHolder.getInstance().setUser(user);
                 jumpTo(MainActivity.class);
             }
 
@@ -210,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void jumpTo(Class<?> target) {
         Intent intent = new Intent(getApplicationContext(), target);
-        intent.putExtra("User", user);
+        //intent.putExtra("User", user);
         startActivity(intent);
     }
 }

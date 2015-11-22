@@ -14,6 +14,7 @@ public abstract class User implements Serializable, Comparable<User> {
     private String passWord;
     private String email;
     private String avatar;
+    private String phone;
     private Integer role;
     private String realName;
 
@@ -24,14 +25,14 @@ public abstract class User implements Serializable, Comparable<User> {
         this.role = role;
     }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -56,6 +57,14 @@ public abstract class User implements Serializable, Comparable<User> {
         this.passWord = passWord;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -64,12 +73,12 @@ public abstract class User implements Serializable, Comparable<User> {
         this.avatar = avatar;
     }
 
-    public Integer getRole() {
-        return role;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getRealName() {

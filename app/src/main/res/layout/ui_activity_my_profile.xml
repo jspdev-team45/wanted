@@ -45,107 +45,131 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="24dp">
+        <!--<fragment-->
+            <!--android:id="@+id/profile_content_frag"-->
+            <!--android:name="com.wanted.ui.ProfileContentFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<include layout="@layout/content_profile" />-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingTop="24dp">-->
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/profile_basic_info_card"
-                cardCornerRadius="20dp"
-                cardElevation="20dp"
-                cardUseCompatPadding="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_margin">
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:id="@+id/profile_basic_info_card"-->
+                <!--cardCornerRadius="20dp"-->
+                <!--cardElevation="20dp"-->
+                <!--cardUseCompatPadding="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/card_margin">-->
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<LinearLayout-->
+                    <!--style="@style/Widget.CardContent"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/basic_info_title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/basic_info_title"-->
+                        <!--android:textAppearance="@style/TextAppearance.AppCompat.Title"/>-->
 
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/basic_info_detail"/>
+                    <!--<TextView-->
+                        <!--style="@style/TextAppearance.AppCompat.Body1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/basic_info_detail"/>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-            </android.support.v7.widget.CardView>
+            <!--</android.support.v7.widget.CardView>-->
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/profile_contact_info_card"
-                cardCornerRadius="20dp"
-                cardElevation="20dp"
-                cardUseCompatPadding="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_margin">
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:id="@+id/profile_contact_info_card"-->
+                <!--cardCornerRadius="20dp"-->
+                <!--cardElevation="20dp"-->
+                <!--cardUseCompatPadding="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/card_margin">-->
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<LinearLayout-->
+                    <!--style="@style/Widget.CardContent"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/contact_info_title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/contact_info_title"-->
+                        <!--android:textAppearance="@style/TextAppearance.AppCompat.Title"/>-->
 
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/contact_info_detail"/>
+                    <!--<TextView-->
+                        <!--style="@style/TextAppearance.AppCompat.Body1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/contact_info_detail"/>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-            </android.support.v7.widget.CardView>
+            <!--</android.support.v7.widget.CardView>-->
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/profile_other_info_card"
-                cardCornerRadius="20dp"
-                cardElevation="20dp"
-                cardUseCompatPadding="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_margin">
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:id="@+id/profile_other_info_card"-->
+                <!--cardCornerRadius="20dp"-->
+                <!--cardElevation="20dp"-->
+                <!--cardUseCompatPadding="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/card_margin">-->
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<LinearLayout-->
+                    <!--style="@style/Widget.CardContent"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/other_info_title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/other_info_title"-->
+                        <!--android:textAppearance="@style/TextAppearance.AppCompat.Title"/>-->
 
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/other_info_detail"/>
+                    <!--<TextView-->
+                        <!--style="@style/TextAppearance.AppCompat.Body1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/other_info_detail"/>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+            <!--</android.support.v7.widget.CardView>-->
+        <!--</LinearLayout>-->
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/profile_fab_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_dialog_edit" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/profile_fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_dialog_save"
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

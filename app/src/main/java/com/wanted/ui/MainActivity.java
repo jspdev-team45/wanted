@@ -24,11 +24,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wanted.R;
 import com.wanted.entities.Role;
 import com.wanted.entities.User;
+import com.wanted.util.DataHolder;
 import com.wanted.util.ResizeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.wanted.R;
 
 /**
  * Created by xlin2
@@ -50,16 +50,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_activity_main);
 
-        getDataFromActivity();
+        getUserData();
         findViews();
         initViews();
         addListeners();
     }
 
-    public void getDataFromActivity() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            user = (User) extras.get("User");
+    public void getUserData() {
+        user = DataHolder.getInstance().getUser();
+        if (user != null) {
             Toast.makeText(this, "Id is " + user.getId(), Toast.LENGTH_LONG).show();
         }
     }
