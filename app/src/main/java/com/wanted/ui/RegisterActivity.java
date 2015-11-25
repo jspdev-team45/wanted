@@ -178,7 +178,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             HttpClient client = new HttpClient(url);
             response = client.sendToServer(packData());
-            System.out.println("fahfdkjahfkjdslfhadfhalkjsdfhlkadjhflkjalhfjalhfdj");
             return true;
         }
 
@@ -213,11 +212,11 @@ public class RegisterActivity extends AppCompatActivity {
         role = roleSelect.getCheckedRadioButtonId();
         if (role == R.id.role_seeker) {
             role = Role.SEEKER;
-            user = new Seeker(email, password, name, role);
+            user = new Seeker(name, password, email, role);
         }
         else {
             role = Role.RECRUITER;
-            user = new Recruiter(email, password, name, role);
+            user = new Recruiter(name, password, email, role);
         }
         Pack ret = new Pack(Information.REGISTER, user);
 

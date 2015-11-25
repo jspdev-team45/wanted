@@ -28,7 +28,6 @@ public class HttpClient implements HttpClientInterface, ClientConstants {
 
     public Pack sendToServer(Pack request) {
         Pack response = null;
-        System.out.println("afdkjahflkshafldkjla");
         if (openConnection()){
             response = (Pack) handleSession(request);
             closeSession();
@@ -40,20 +39,13 @@ public class HttpClient implements HttpClientInterface, ClientConstants {
     public boolean openConnection() {
         try {
             connection = url.openConnection();
+            connection.setDoOutput(true);
+            //connection.setDoInput(true);
         } catch (IOException e) {
             if (DEBUG) System.err.println("Unable to connect " + url.toString());
             return false;
         }
 
-        try {
-            writer = new ObjectOutputStream(connection.getOutputStream());
-            reader = new ObjectInputStream(connection.getInputStream());
-        }
-        catch (Exception e){
-            if (DEBUG) System.err.println("Unable to obtain stream to/from " + url.toString());
-            e.printStackTrace();
-            return false;
-        }
         return true;
     }
 
@@ -62,11 +54,16 @@ public class HttpClient implements HttpClientInterface, ClientConstants {
         Object response = null;
 
         try {
+            writer = new ObjectOutputStream(connection.getOutputStream());
             sendOutput(request);
+            reader = new ObjectInputStream(connection.getInputStream());
             response = reader.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            if (DEBUG) System.err.println("Unable to obtain stream to/from " + url.toString());
             e.printStackTrace();
         }
 
