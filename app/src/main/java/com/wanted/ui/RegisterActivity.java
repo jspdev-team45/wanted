@@ -1,5 +1,6 @@
 package com.wanted.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +21,18 @@ import com.wanted.entities.Recruiter;
 import com.wanted.entities.Role;
 import com.wanted.entities.Seeker;
 import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
 import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
 import com.wanted.util.ValidateUserInfo;
 import com.wanted.ws.remote.CheckNetwork;
 import com.wanted.ws.remote.DefaultSocketClient;
 import com.wanted.entities.Information;
+import com.wanted.ws.remote.ClientConstants;
+import com.wanted.ws.remote.HttpClient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by xlin2
@@ -141,22 +148,17 @@ public class RegisterActivity extends AppCompatActivity {
      * Represents an asynchronous login/registration task used to authenticate the user.
      */
     public class RegisterTask extends AsyncTask<Void, Void, Boolean> {
-        private final String mName;
-        private final String mEmail;
-        private final String mPassword;
         private Pack response;
+        private ProgressDialog pd;
 
         RegisterTask() {
-            mName = name;
-            mEmail = email;
-            mPassword = password;
             response = null;
         }
 
         @Override
         protected void onPreExecute() {
             // Show the spinner and disable interaction
-            progressLayout.setVisibility(View.VISIBLE);
+            pd = new DialogUtil().showProgress(RegisterActivity.this, "Processing...");
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                                  WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
@@ -164,15 +166,26 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             // If there's no account registered, register the new account here.
-            DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
+//            DefaultSocketClient client = new DefaultSocketClient(ClientConstants.IP,
+//                                                                  ClientConstants.PORT);
+            URL url = null;
+            try {
+                url = new URL(new AddrUtil().getAddress("Register"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if (url == null)
+                return false;
+            HttpClient client = new HttpClient(url);
             response = client.sendToServer(packData());
+            System.out.println("fahfdkjahfkjdslfhadfhalkjsdfhlkadjhflkjalhfjalhfdj");
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             // Cancel the progress spinner and enable interaction
-            progressLayout.setVisibility(View.GONE);
+            pd.dismiss();
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             registerTask = null;
 
@@ -213,7 +226,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void jumpTo(Class<?> target) {
         Intent intent = new Intent(getApplicationContext(), target);
-        //intent.putExtra("User", user);
         startActivity(intent);
     }
 }

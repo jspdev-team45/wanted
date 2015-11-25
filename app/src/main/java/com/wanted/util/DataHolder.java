@@ -7,7 +7,10 @@ import com.wanted.entities.User;
  */
 public class DataHolder {
     private static final DataHolder holder = new DataHolder();
+
     private User user;
+
+    private DataHolder() {}
 
     public static DataHolder getInstance() { return holder; }
 

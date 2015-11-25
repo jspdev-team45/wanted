@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Recruiter extends User implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String company;
+    private Integer company;
     private String department;
 
     public Recruiter(String name, String passWord, String email, Integer role) {
@@ -64,11 +64,11 @@ public class Recruiter extends User implements Serializable {
         super.setRealName(realName);
     }
     
-    public String getCompany() {
+    public Integer getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(Integer company) {
         this.company = company;
     }
 

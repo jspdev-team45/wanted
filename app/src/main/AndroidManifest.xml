@@ -18,13 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
         <activity
-            android:name=".ui.LoginActivity"
-            android:label="@string/app_name">
+            android:name=".ui.SplashActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
@@ -81,8 +85,19 @@
         <activity
             android:name=".ui.PostActivity"
             android:label="@string/title_activity_post"
-            android:theme="@style/MyTheme.NoActionBar" />
-        <activity android:name=".ui.AddPostActivity" />
+            android:theme="@style/MyTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.AddPostActivity"
+            android:label="@string/title_activity_add_post">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.PostActivity" />
+        </activity>
+
     </application>
 
 </manifest>

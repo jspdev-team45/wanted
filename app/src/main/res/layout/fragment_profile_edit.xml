@@ -44,7 +44,10 @@
                     android:id="@+id/profile_edit_seeker_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
+                    android:layout_weight="5"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:singleLine="true"/>
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +67,8 @@
                     android:id="@+id/profile_edit_seeker_college"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
+                    android:layout_weight="5"
+                    android:entries="@array/colleges"/>
             </LinearLayout>
 
             <LinearLayout
@@ -84,7 +88,8 @@
                     android:id="@+id/profile_edit_seeker_major"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
+                    android:layout_weight="5"
+                    android:entries="@array/majors"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -135,27 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:weightSum="7"
-                android:orientation="horizontal">
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/basic_info_company"/>
-                <EditText
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:id="@+id/profile_edit_recruiter_company"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:weightSum="7"
                 android:orientation="horizontal">
                 <TextView
@@ -164,12 +149,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="@string/basic_info_department"/>
-                <EditText
+                <Spinner
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:id="@+id/profile_edit_recruiter_department"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
+                    android:layout_weight="5"
+                    android:entries="@array/departments"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -234,11 +220,110 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:maxLength="15"/>
+                    android:maxLength="13"
+                    android:numeric="integer"/>
             </LinearLayout>
 
         </LinearLayout>
 
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_company_info_card"
+        cardCornerRadius="0dp"
+        cardElevation="20dp"
+        cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/profile_edit_company_banner"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/google"/>
+
+            <LinearLayout
+                style="@style/Widget.CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_edit_company_banner">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/company_info_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_name"/>
+                    <EditText
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_edit_company_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:maxLength="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_location"/>
+                    <EditText
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_edit_company_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:maxLength="50" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_desc"/>
+                    <EditText
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_edit_company_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView

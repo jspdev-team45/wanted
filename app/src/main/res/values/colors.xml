@@ -38,6 +38,34 @@
     <color name="light_blue_a400">#00b0ff</color>
     <color name="light_blue_a700">#0091ea</color>
 
+    <!-- CYAN -->
+    <color name="cyan_50">#e0f7fa</color>
+    <color name="cyan_100">#b2ebf2</color>
+    <color name="cyan_200">#80deea</color>
+    <color name="cyan_300">#4dd0e1</color>
+    <color name="cyan_400">#26c6da</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="cyan_600">#00acc1</color>
+    <color name="cyan_700">#0097a7</color>
+    <color name="cyan_800">#00838f</color>
+    <color name="cyan_900">#006064</color>
+    <color name="cyan_a100">#84ffff</color>
+    <color name="cyan_a200">#18ffff</color>
+    <color name="cyan_a400">#00e5ff</color>
+    <color name="cyan_a700">#00b8d4</color>
+
+    <!-- BLUE GREY -->
+    <color name="blue_grey_50">#eceff1</color>
+    <color name="blue_grey_100">#cfd8dc</color>
+    <color name="blue_grey_200">#b0bef5</color>
+    <color name="blue_grey_300">#90a4ae</color>
+    <color name="blue_grey_400">#78909c</color>
+    <color name="blue_grey_500">#607d8b</color>
+    <color name="blue_grey_600">#6546e7</color>
+    <color name="blue_grey_700">#455a64</color>
+    <color name="blue_grey_800">#37474f</color>
+    <color name="blue_grey_900">#263238</color>
+
     <!-- GREY -->
     <color name="grey_0">#ffffff</color> <!-- Grey 1000 (White) -->
     <color name="grey_50">#fafafa</color>

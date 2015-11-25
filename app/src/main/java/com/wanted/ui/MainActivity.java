@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setNavMenu() {
-        navigationView.getMenu().clear();
-        navigationView.inflateMenu(R.menu.activity_recruiter_drawer);
+//        navigationView.getMenu().clear();
+//        navigationView.inflateMenu(R.menu.activity_recruiter_drawer);
         if (user != null) {
             if (user.getRole() == Role.RECRUITER) {
                 navigationView.getMenu().clear();

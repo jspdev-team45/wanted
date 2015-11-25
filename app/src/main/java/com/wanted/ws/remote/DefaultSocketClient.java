@@ -5,17 +5,13 @@
 package com.wanted.ws.remote;
 
 import com.wanted.entities.Pack;
-import com.wanted.entities.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Properties;
-import java.util.Scanner;
 
-public class DefaultSocketClient implements SocketClientInterface, SocketClientConstants{
+public class DefaultSocketClient implements SocketClientInterface, ClientConstants {
 
 	private ObjectInputStream reader;
     private ObjectOutputStream writer;
@@ -39,7 +35,7 @@ public class DefaultSocketClient implements SocketClientInterface, SocketClientC
 	public Pack sendToServer(Pack request) {
 		Pack response = null;
 		if (openConnection()){
-			response = handleSession(request);
+			response = (Pack) handleSession(request);
 			closeSession();
 		}
 		return response;
@@ -73,14 +69,12 @@ public class DefaultSocketClient implements SocketClientInterface, SocketClientC
 	 */
 	@Override
 	@SuppressWarnings("resource")
-	public Pack handleSession(Pack request) {
-		Pack response = null;
+	public Object handleSession(Object request) {
+		Object response = null;
 
 		try {
-			// ask user to enter command
 			sendOutput(request);
-			response = (Pack) reader.readObject();
-
+			response = reader.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -111,8 +105,8 @@ public class DefaultSocketClient implements SocketClientInterface, SocketClientC
 	@Override
 	public void closeSession() {
 		try {
-			writer = null;
-			reader = null;
+			writer.close();
+			reader.close();
 			socket.close();
 		} catch (IOException e) {
 			if (DEBUG) System.err.println("Error closing socket to " + strHost);

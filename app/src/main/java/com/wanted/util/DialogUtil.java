@@ -1,6 +1,7 @@
 package com.wanted.util;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -24,5 +25,12 @@ public class DialogUtil {
             }
         });
         builder.create().show();
+    }
+
+    public ProgressDialog showProgress(Context context, String msg) {
+        ProgressDialog pd = new ProgressDialog(context);
+        pd.setMessage(msg);
+        pd.show();
+        return pd;
     }
 }

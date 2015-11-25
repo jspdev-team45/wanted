@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colleges">
+        <item>Carnegie Mellon University</item>
+        <item>Massachusetts Institute of Technology</item>
+        <item>Stanford University</item>
+        <item>Princeton University</item>
+        <item>Harvard University</item>
+        <item>Saturn University</item>
+    </string-array>
+
+    <string-array name="majors">
+        <item>History of Architecture</item>
+        <item>Computer Science</item>
+        <item>Economics</item>
+        <item>Education</item>
+        <item>Mathematics</item>
+        <item>Physics</item>
+    </string-array>
+
+    <string-array name="departments">
+        <item>Customer Service</item>
+        <item>Sales</item>
+        <item>Finance</item>
+        <item>Maintenance</item>
+        <item>Marketing</item>
+        <item>Information Technology</item>
+        <item>Human Resources</item>
+        <item>Production Department</item>
+    </string-array>
+</resources>

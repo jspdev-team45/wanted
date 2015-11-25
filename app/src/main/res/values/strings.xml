@@ -43,6 +43,10 @@
     <string name="contact_info_email">EMAIL: </string>
     <string name="contact_info_phone">PHONE: </string>
     <string name="other_info_title">Other Information</string>
+    <string name="company_info_title">Company Information</string>
+    <string name="company_info_name">NAME: </string>
+    <string name="company_info_location">LOCATION: </string>
+    <string name="company_info_desc">DESCRIPT: </string>
     <string name="other_info_detail">Other information Other information Other information Other</string>
 
     <!--Error Information-->
@@ -56,6 +60,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="create_account">Register</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="remember_me">Remember Me</string>
     <string name="action_sign_in">SIGN IN</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -101,7 +106,13 @@
 
     <!--Post Page-->
     <string name="title_activity_post">My Posts</string>
+    <string name="no_profile_error">You have not set your personal information, please set it first!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Post Page-->
+    <string name="title_activity_add_post">Add Recruitment</string>
+    <string name="title_form_add_post">Recruitment Infomation</string>
+    <string name="add_post_title">TITLE: </string>
+    <string name="add_post_desc">DESCRIPT: </string>
+    <string name="add_post_submit">SUBMIT</string>
+    <string name="add_post_clear">CLEAR</string>
 </resources>

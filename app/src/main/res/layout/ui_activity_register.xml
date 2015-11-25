@@ -25,7 +25,9 @@
 
     </LinearLayout>
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/register_form"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -180,6 +182,7 @@
 
             </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
 </FrameLayout>

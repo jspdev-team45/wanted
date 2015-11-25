@@ -8,7 +8,7 @@
     tools:context="com.wanted.ui.MyProfileActivity">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_basic_info_seeker"
+        android:id="@+id/profile_basic_content_seeker"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -92,7 +92,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_basic_info_recruiter"
+        android:id="@+id/profile_basic_content_recruiter"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -143,26 +143,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/basic_info_company"/>
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:id="@+id/profile_recruiter_company"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:weightSum="7"
-                android:orientation="horizontal">
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:text="@string/basic_info_department"/>
                 <TextView
                     style="@style/TextAppearance.AppCompat.Body1"
@@ -177,7 +157,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_contact_info_card"
+        android:id="@+id/profile_contact_content_card"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -241,7 +221,105 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_other_info_card"
+        android:id="@+id/profile_company_content_card"
+        cardCornerRadius="0dp"
+        cardElevation="20dp"
+        cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/profile_company_banner"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/google"/>
+
+            <LinearLayout
+                style="@style/Widget.CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_company_banner">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/company_info_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_name"/>
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_company_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:maxLength="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_location"/>
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_company_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:maxLength="50" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="7"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/company_info_desc"/>
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:id="@+id/profile_company_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_other_content_card"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
