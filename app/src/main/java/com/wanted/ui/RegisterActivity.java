@@ -204,6 +204,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             registerTask = null;
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
     }

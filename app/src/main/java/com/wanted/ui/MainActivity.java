@@ -191,8 +191,12 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addItem(new JobFragment(), "Jobs");
-        adapter.addItem(new PeopleFragment(), "People");
+        JobFragment jFrag = new JobFragment();
+        PeopleFragment pFrag = new PeopleFragment();
+        jFrag.setContext(MainActivity.this);
+        pFrag.setContext(MainActivity.this);
+        adapter.addItem(jFrag, "Jobs");
+        adapter.addItem(pFrag, "People");
         viewPager.setAdapter(adapter);
     }
 

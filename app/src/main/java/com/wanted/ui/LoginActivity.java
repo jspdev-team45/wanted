@@ -191,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             loginTask = null;
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
     }
