@@ -2,6 +2,7 @@ package com.wanted.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,21 +12,32 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.wanted.R;
+import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
+import com.wanted.entities.Post;
 import com.wanted.entities.Role;
+import com.wanted.util.AddrUtil;
+import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
+import com.wanted.ws.remote.HttpClient;
 
-public class AddPostActivity extends AppCompatActivity {
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class  AddPostActivity extends AppCompatActivity {
     private EditText editTitle;
     private EditText editDesc;
     private Button btnClear;
     private Button btnSubmit;
+    private Spinner spnMjr;
 
     private String title;
     private String desc;
+    private String major;
 
     private AddPostTask addPostTask = null;
 
@@ -43,6 +55,7 @@ public class AddPostActivity extends AppCompatActivity {
         editDesc = (EditText) findViewById(R.id.add_post_edit_desc);
         btnClear = (Button) findViewById(R.id.add_post_btn_clear);
         btnSubmit = (Button) findViewById(R.id.add_post_btn_submit);
+        spnMjr = (Spinner) findViewById(R.id.add_post_spinner_major);
     }
 
     private void addListeners() {
@@ -51,6 +64,7 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editTitle.setText("");
                 editDesc.setText("");
+                spnMjr.setSelection(0, false);
             }
         });
 
@@ -76,6 +90,7 @@ public class AddPostActivity extends AppCompatActivity {
     private void getFormValue() {
         title = editTitle.getText().toString();
         desc = editDesc.getText().toString();
+        major = spnMjr.getSelectedItem().toString();
     }
 
     /**
@@ -126,11 +141,21 @@ public class AddPostActivity extends AppCompatActivity {
             // If there's no account registered, register the new account here.
             //DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
             //response = client.sendToServer(packData());
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            URL url = null;
             try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                url = new URL(new AddrUtil().getAddress("AddPost"));
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+            if (url == null)
+                return false;
+            HttpClient client = new HttpClient(url);
+            response = client.sendToServer(packData());
             return true;
         }
 
@@ -141,6 +166,11 @@ public class AddPostActivity extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             addPostTask = null;
 
+            if (response == null) {
+                new DialogUtil().showError(AddPostActivity.this, "Unable to post.");
+            } else {
+                finish();
+            }
         }
 
         @Override
@@ -158,5 +188,13 @@ public class AddPostActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Pack packData() {
+        Post addPost = new Post(title, desc, major);
+        addPost.setUid(DataHolder.getInstance().getUser().getId());
+        Pack ret = new Pack(Information.ADD_POST, addPost);
+
+        return ret;
     }
 }

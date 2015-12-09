@@ -16,6 +16,7 @@
         <item>Education</item>
         <item>Mathematics</item>
         <item>Physics</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="departments">

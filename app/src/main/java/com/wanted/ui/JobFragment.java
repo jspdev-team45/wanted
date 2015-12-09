@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,21 @@ import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
+import com.wanted.entities.Company;
+import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
+import com.wanted.entities.Post;
+import com.wanted.entities.Recruiter;
+import com.wanted.entities.Role;
+import com.wanted.entities.Seeker;
+import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
+import com.wanted.util.DataHolder;
+import com.wanted.ws.remote.HttpClient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by xlin2
@@ -38,10 +52,15 @@ public class JobFragment extends Fragment {
     private PullRefreshLayout jobRefreshLayout;
     private LinearLayoutManager jobLayoutManager;
 
-    private int[] companys = new int[]{R.string.company_google, R.string.company_facebook};
-    private String[] descriptions = new String[]{"We are looking for a new software engineer",
-                                                  "Looking for a front end engineer"};
-    private int[] drawables = new int[]{R.drawable.google, R.drawable.facebook};
+//    private int[] companys = new int[]{R.string.company_google, R.string.company_facebook};
+//    private String[] descriptions = new String[]{"We are looking for a new software engineer",
+//                                                  "Looking for a front end engineer"};
+//    private int[] drawables = new int[]{R.drawable.banner_default, R.drawable.facebook};
+    private ArrayList<Post> postList;
+    private int preLen = 0;
+    private int cursor = -1;
+    private final int MAX_FETCH = 4;
+
     private boolean loading = true;
     private int previousTotal = 0;
     private int totalItemCount;
@@ -64,9 +83,21 @@ public class JobFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_jobs, container, false);
         findViews(view);
-        initViews();
-        addListeners();
+        doTheRest();
+//        initViews();
+//        addListeners();
         return view;
+    }
+
+    protected void doTheRest() {
+        if (DataHolder.getInstance().getUser().getRole() == Role.SEEKER &&
+                ((Seeker) DataHolder.getInstance().getUser()).getMajor() != null) {
+            initViews();
+            addListeners();
+        }
+        else {
+            Toast.makeText(context, getString(R.string.no_profile_error), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -83,7 +114,41 @@ public class JobFragment extends Fragment {
         jobLayoutManager = new LinearLayoutManager(context);
         jobListView.setLayoutManager(jobLayoutManager);
         jobListView.setDrawingCacheEnabled(true);
+        //initPostList();
         firstRefresh();
+    }
+
+    /**
+     * For debug use
+     */
+    private void initPostList() {
+        postList = new ArrayList<Post>();
+        Post post1 = new Post("Software enginner", "We are looking for a new software engineer", "Software engineer");
+        post1.setPid(5);
+        Recruiter people1 = new Recruiter("Tom", null, "tom@aa.com", Role.RECRUITER);
+        people1.setId(6);
+        people1.setCompanyID(-1);
+        people1.setAvatar("people_tom.jpg");
+        people1.setPhone("333333333");
+        post1.setRecruiter(people1);
+        Company company1 = new Company("Google", "banner_default_default.jpg", "Company description1", "Some street, Pittsburgh");
+        post1.setCompany(company1);
+        postList.add(post1);
+
+        Post post2 = new Post("Computer enginner", "Looking for a new computer engineer", "Electrical engineer");
+        post1.setPid(4);
+        Recruiter people2 = new Recruiter("Mike", null, "mike@aa.com", Role.RECRUITER);
+        people2.setId(5);
+        people2.setCompanyID(-1);
+        people2.setAvatar("people_mike.jpg");
+        people2.setPhone("4444444");
+        post2.setRecruiter(people2);
+        Company company2 = new Company("Facebook", "facebook.jpg", "Company description2", "Some street, SV");
+        post2.setCompany(company2);
+        postList.add(post2);
+
+        postList.add(post1);
+        postList.add(post2);
     }
 
     /**
@@ -104,6 +169,7 @@ public class JobFragment extends Fragment {
             @Override
             public void onItemClick(Card card, int position) {
                 Intent intent = new Intent(getActivity(), JobDetailActivity.class);
+                intent.putExtra("post", postList.get(position));
                 startActivity(intent);
             }
 
@@ -150,15 +216,16 @@ public class JobFragment extends Fragment {
     }
 
     private void addCards() {
-        for (int i = 0; i < 3; ++i) {
-            int j = i % 2;
+        int len = postList.size();
+        for (int i = preLen; i < len; ++i) {
+            String addr = new AddrUtil().getImageAddress(postList.get(i).getCompany().getBanner());
             Card card = new Card.Builder(getActivity())
                     .withProvider(new CardProvider())
                     .setLayout(R.layout.material_image_with_buttons_card)
-                    .setTitle(companys[j])
+                    .setTitle(postList.get(i).getCompany().getName())
                     .setTitleColor(Color.WHITE)
-                    .setDescription(descriptions[j])
-                    .setDrawable(drawables[j])
+                    .setDescription(postList.get(i).getDescription())
+                    .setDrawable(addr)
                     .addAction(R.id.right_text_button, new TextViewAction(getActivity())
                             .setText("Apply")
                             .setTextColor(Color.BLUE))
@@ -167,7 +234,6 @@ public class JobFragment extends Fragment {
                             .setTextColor(Color.BLACK))
                     .endConfig()
                     .build();
-
             jobListView.getAdapter().add(card);
         }
     }
@@ -188,11 +254,14 @@ public class JobFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
+            cursor = -1;
+            response = getResponse();
             return true;
         }
 
@@ -201,6 +270,12 @@ public class JobFragment extends Fragment {
             // Cancel the progress spinner and enable interaction
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             refreshTask = null;
+
+            // Get job array
+            if (postList != null) postList.clear();
+//            initPostList();
+            postList = (ArrayList<Post>) response.getContent();
+            preLen = 0;
 
             // Update ui
             jobListView.getAdapter().clearAll();
@@ -211,6 +286,8 @@ public class JobFragment extends Fragment {
             // Initialize loading variables
             previousTotal = 0;
             loading = true;
+            int size = postList.size();
+            cursor = size == 0 ? 0 : postList.get(size - 1).getPid();
         }
 
         @Override
@@ -238,11 +315,13 @@ public class JobFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
+            response = getResponse();
             return true;
         }
 
@@ -252,9 +331,23 @@ public class JobFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             loadTask = null;
 
+            ArrayList<Post> tempList = (ArrayList<Post>) response.getContent();
+//            ArrayList<Post> tempList = new ArrayList<Post>();
+//            tempList.add(postList.get(0));
+//            tempList.add(postList.get(1));
+//            tempList.add(postList.get(2));
+            preLen = postList.size();
+            postList.addAll(tempList);
+
             // Update ui
             addCards();
             jobListView.scrollToPosition(lastVisibleItem + 1);
+            if (tempList.size() <= 0)
+                Toast.makeText(context, "All data has been fetched", Toast.LENGTH_LONG).show();
+
+            //
+            int size = postList.size();
+            cursor = size == 0 ? 0 : postList.get(size - 1).getPid();
         }
 
         @Override
@@ -265,4 +358,20 @@ public class JobFragment extends Fragment {
 
     }
 
+    private Pack getResponse() {
+        URL url = null;
+        try {
+            url = new URL(new AddrUtil().getAddress("GetPost"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        if (url == null) {
+            return null;
+        }
+
+        HttpClient client = new HttpClient(url);
+        String major = ((Seeker) DataHolder.getInstance().getUser()).getMajor();
+        Pack response = client.sendToServer(new Pack(Information.GET_POST, major + ":" + cursor));
+        return response;
+    }
 }

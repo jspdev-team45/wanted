@@ -7,8 +7,20 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wanted.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.zip.Inflater;
 
 /**
  * Author: Junjian Xie
@@ -38,6 +50,7 @@ public class ResizeUtil {
      */
     public Drawable resizeAvatar(int drawable) {
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
+        bitmapOrg = new ImageUtil().centerCrop(bitmapOrg);
 
         // New width and height
         int width;
@@ -82,6 +95,7 @@ public class ResizeUtil {
 
         // Resize
         Bitmap bitmapOrg = BitmapFactory.decodeResource(context.getResources(), drawable);
+        bitmapOrg = new ImageUtil().centerCrop(bitmapOrg);
 
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmapOrg, width, height, false);
 
@@ -89,6 +103,30 @@ public class ResizeUtil {
         return ret;
     }
 
+    public int[] resizePeople() {
+        int width;
+        int height;
+
+        // Changed size
+        if (swidth > XLARGE) {
+            width = 600;
+            height = 600;
+        } else if (swidth > LARGE) {
+            width = 400;
+            height = 400;
+        } else {
+            width = 300;
+            height = 300;
+        }
+
+        int[] ret = new int[] { width, height };
+        return ret;
+    }
+
+    /**
+     *
+     * @return
+     */
     public int sideBarSize() {
         if (swidth > XLARGE) {
             return 50;
@@ -98,4 +136,5 @@ public class ResizeUtil {
             return 20;
         }
     }
+
 }

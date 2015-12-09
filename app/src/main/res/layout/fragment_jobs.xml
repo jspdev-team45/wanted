@@ -1,9 +1,3 @@
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".ui.JobFragment">-->
-
 <com.baoyz.widget.PullRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,5 +11,3 @@
         android:id="@+id/job_listview"/>
 
 </com.baoyz.widget.PullRefreshLayout>
-
-<!--</FrameLayout>-->

@@ -9,19 +9,45 @@ import java.io.Serializable;
  */
 public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String logo;
+    private int id;
+    private String name;
+    private String banner;
     private String description;
     private String location;
+    private byte[] hash;
 
     public Company() {
     }
 
-    public String getLogo() {
-        return logo;
+    public Company(String name, String banner, String description, String location) {
+        this.name = name;
+        this.banner = banner;
+        this.description = description;
+        this.location = location;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
     public String getDescription() {
@@ -38,5 +64,13 @@ public class Company implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public byte[] getHash() {
+        return hash;
+    }
+
+    public void setHash(byte[] hash) {
+        this.hash = hash;
     }
 }

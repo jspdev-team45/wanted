@@ -12,5 +12,5 @@
     <com.dexafree.materialList.view.MaterialListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/resume_listview"/>
+        android:id="@+id/resume_basic_info"/>
 </RelativeLayout>

@@ -3,6 +3,9 @@ package com.wanted.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,15 +18,26 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wanted.R;
+import com.wanted.entities.Company;
+import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
+import com.wanted.entities.Recruiter;
 import com.wanted.entities.Role;
+import com.wanted.entities.Seeker;
 import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
+import com.wanted.util.ImageUtil;
 import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
 import com.wanted.ws.local.ChangePhotoService;
+import com.wanted.ws.remote.HttpClient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  *
@@ -43,18 +57,20 @@ public class ProfileEditFragment extends Fragment {
     private Spinner editCollege;
     private Spinner editMajor;
     private Spinner editDepart;
+    private TextView editEmail;
     private EditText editPhone;
     private EditText editCompany;
     private EditText editCompanyLoc;
     private EditText editCompanyDesc;
     private ImageView editBanner;
+    private ImageView editAvatar;
 
     String name;
     String college;
     String major;
     String depart;
     String phone;
-    String company;
+    String companyName;
     String companyLoc;
     String companyDesc;
 
@@ -88,8 +104,9 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private void findViews(View view) {
-        seekerBasicInfo = (CardView) view.findViewById(R.id.profile_basic_info_seeker);
-        recruiterBasicInfo = (CardView) view.findViewById(R.id.profile_basic_info_recruiter);
+        editAvatar = (ImageView) ((Activity)context).findViewById(R.id.profile_backdrop);
+        seekerBasicInfo = (CardView) view.findViewById(R.id.detail_basic_info_seeker);
+        recruiterBasicInfo = (CardView) view.findViewById(R.id.detail_basic_info_recruiter);
         companyInfo = (CardView) view.findViewById(R.id.profile_company_info_card);
         otherInfo = (CardView) view.findViewById(R.id.profile_other_info_card);
 
@@ -108,6 +125,7 @@ public class ProfileEditFragment extends Fragment {
             editCompanyDesc = (EditText) view.findViewById(R.id.profile_edit_company_desc);
             editBanner = (ImageView) view.findViewById(R.id.profile_edit_company_banner);
         }
+        editEmail = (TextView) view.findViewById(R.id.profile_email);
         editPhone = (EditText) view.findViewById(R.id.profile_edit_phone);
     }
 
@@ -123,6 +141,42 @@ public class ProfileEditFragment extends Fragment {
             recruiterBasicInfo.setVisibility(View.VISIBLE);
             otherInfo.setVisibility(View.GONE);
             companyInfo.setVisibility(View.VISIBLE);
+        }
+        initViewText();
+    }
+
+    public void initViewText() {
+        user = DataHolder.getInstance().getUser();
+        Company company = DataHolder.getInstance().getCompany();
+
+        setText(editName, user.getRealName());
+        setText(editEmail, user.getEmail());
+        setText(editPhone, user.getPhone());
+
+        if (role == Role.RECRUITER) {
+            if (company == null) company = new Company();
+            setText(editCompany, company.getName());
+            setText(editCompanyLoc, company.getLocation());
+            setText(editCompanyDesc, company.getDescription());
+//            if (company.getBanner() != null) {
+//                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
+//                Glide.with(context).load(bannerAddr).into(editBanner);
+//            }
+        }
+    }
+
+    private void setText(View targetView, String text) {
+        if (targetView.getClass().getSimpleName().equals("AppCompatTextView")) {
+            if (text == null)
+                ((TextView)targetView).setText("");
+            else
+                ((TextView)targetView).setText(text);
+        }
+        else if (targetView.getClass().getSimpleName().equals("AppCompatEditText")) {
+            if (text == null)
+                ((EditText)targetView).setText("");
+            else
+                ((EditText)targetView).setText(text);
         }
     }
 
@@ -166,7 +220,7 @@ public class ProfileEditFragment extends Fragment {
         }
         if (role == Role.RECRUITER) {
             depart = editDepart.getSelectedItem().toString();
-            company = editCompany.getText().toString();
+            companyName = editCompany.getText().toString();
             companyLoc = editCompanyLoc.getText().toString();
             companyDesc = editCompanyDesc.getText().toString();
         }
@@ -192,7 +246,7 @@ public class ProfileEditFragment extends Fragment {
             Toast.makeText(context, "Phone should not be empty", Toast.LENGTH_LONG).show();
             cancel = true;
         } else if (role == Role.RECRUITER) {
-            if (TextUtils.isEmpty(company)) {
+            if (TextUtils.isEmpty(companyName)) {
                 editPhone.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 editCompany.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error_sign, 0);
                 Toast.makeText(context, "Company name should not be empty", Toast.LENGTH_LONG).show();
@@ -218,6 +272,7 @@ public class ProfileEditFragment extends Fragment {
      */
     public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
         private Pack response;
+        private Boolean success;
         private ProgressDialog pd;
 
         ProfileTask() {
@@ -227,22 +282,21 @@ public class ProfileEditFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // Show the spinner and disable interaction
-            pd = new DialogUtil().showProgress(context, "Processing...");
+            pd = new DialogUtil().showProgress(context, "Updating profile...");
             ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // If there's no account registered, register the new account here.
-            //DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
-            //response = client.sendToServer(packData());
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (role == Role.RECRUITER) {
+                updateCompany();
+                if (success == false)
+                    return false;
             }
-            return true;
+            System.out.println("Update company finish.");
+            updateUser();
+            return success;
         }
 
         @Override
@@ -252,6 +306,16 @@ public class ProfileEditFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             profileTask = null;
 
+            //
+            if (success == false || response == null || response.getInfo() == Information.FAIL) {
+                new DialogUtil().showError(context, "Unable to update.");
+            }
+            else {
+                DataHolder.getInstance().setUser((User) response.getContent());
+                DataHolder.getInstance().setProfileUpdated(true);
+                Fragment currentFragment = ((Activity)context).getFragmentManager().findFragmentById(R.id.profile_container);
+                ((ProfileContentFragment) currentFragment).updateProfile();
+            }
         }
 
         @Override
@@ -259,6 +323,89 @@ public class ProfileEditFragment extends Fragment {
             profileTask = null;
         }
 
+        private void updateCompany() {
+            URL url = null;
+            try {
+                url = new URL(new AddrUtil().getAddress("UpdateCompany"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if (url == null) {
+                success = false;
+                return;
+            }
+            HttpClient client = new HttpClient(url);
+            response = client.sendToServer(packCompanyData());
+
+            if (response == null || response.getInfo() == Information.FAIL) {
+                success = false;
+                return;
+            }
+
+            Company retCompany = (Company) response.getContent();
+            DataHolder.getInstance().setCompany(retCompany);
+            success = true;
+        }
+
+        private void updateUser() {
+            URL url = null;
+            try {
+                url = new URL(new AddrUtil().getAddress("UpdateUser"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if (url == null) {
+                success = false;
+                return;
+            }
+
+            HttpClient client = new HttpClient(url);
+            response = client.sendToServer(packUserData());
+            success = true;
+        }
+
+    }
+
+    private Pack packCompanyData() {
+        Bitmap banner = ((BitmapDrawable)editBanner.getDrawable()).getBitmap();
+        banner = Bitmap.createScaledBitmap(banner, editBanner.getMeasuredWidth(),
+                                           editBanner.getMeasuredHeight(), false);
+        Company company = new Company();
+        company.setName(companyName);
+        company.setLocation(companyLoc);
+        company.setDescription(companyDesc);
+
+        Pack companyPack = new Pack(Information.UPDATE_COMPANY, company);
+        companyPack.setImage(banner);
+
+        return companyPack;
+    }
+
+    private Pack packUserData() {
+        Drawable drawable = editAvatar.getDrawable();
+        Bitmap avatar = new ImageUtil().convertToBitmap(drawable, editAvatar.getMeasuredWidth(),
+                                                         editAvatar.getMeasuredHeight());
+        Pack pack = null;
+        if (role == Role.SEEKER) {
+            Seeker seeker = new Seeker(user.getName(), user.getPassWord(), user.getEmail(), user.getRole());
+            seeker.setId(user.getId());
+            seeker.setRealName(name);
+            seeker.setCollege(college);
+            seeker.setMajor(major);
+            seeker.setPhone(phone);
+            pack = new Pack(Information.UPDATE_USER, seeker);
+        }
+        else if (role == Role.RECRUITER) {
+            Recruiter recruiter = new Recruiter(user.getName(), user.getPassWord(), user.getEmail(), user.getRole());
+            recruiter.setId(user.getId());
+            recruiter.setRealName(name);
+            recruiter.setCompanyID(DataHolder.getInstance().getCompany().getId());
+            recruiter.setDepartment(depart);
+            recruiter.setPhone(phone);
+            pack = new Pack(Information.UPDATE_USER, recruiter);
+        }
+        pack.setImage(avatar);
+        return pack;
     }
 
 }

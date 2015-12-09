@@ -1,5 +1,8 @@
 package com.wanted.entities;
 
+import android.graphics.Bitmap;
+
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 /**
@@ -9,6 +12,7 @@ public class Pack implements Serializable {
     private static final long serialVersionUID = 1L;
     private Information info;
     private Object content;
+    private byte[] image;
 
     public Pack(Information info, Object content) {
         this.info = info;
@@ -29,5 +33,15 @@ public class Pack implements Serializable {
 
     public void setContent(Object content) {
         this.content = content;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        image = stream.toByteArray();
     }
 }

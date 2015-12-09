@@ -1,6 +1,8 @@
 package com.wanted.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -67,6 +69,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         // set fragment
         ProfileContentFragment cFrag = new ProfileContentFragment();
+        cFrag.setContext(MyProfileActivity.this);
         getFragmentManager().beginTransaction().add(R.id.profile_container, cFrag).commit();
 
         // change photo service
@@ -75,7 +78,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-        Glide.with(this).load(R.drawable.avatar).centerCrop().into(avatarView);
+        Glide.with(this).load(R.drawable.avatar2).centerCrop().into(avatarView);
     }
 
     private void addListeners() {
@@ -99,8 +102,10 @@ public class MyProfileActivity extends AppCompatActivity {
     private void switchToEdit() {
         editFab.setVisibility(View.GONE);
         saveFab.setVisibility(View.VISIBLE);
-        eFrag = new ProfileEditFragment();
-        eFrag.setContext(MyProfileActivity.this);
+        if (eFrag == null) {
+            eFrag = new ProfileEditFragment();
+            eFrag.setContext(MyProfileActivity.this);
+        }
         avatarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +124,10 @@ public class MyProfileActivity extends AppCompatActivity {
     private void switchToContent() {
         editFab.setVisibility(View.VISIBLE);
         saveFab.setVisibility(View.GONE);
-        cFrag = new ProfileContentFragment();
+        if (cFrag == null) {
+            cFrag = new ProfileContentFragment();
+            cFrag.setContext(MyProfileActivity.this);
+        }
         avatarView.setOnClickListener(null);
         getFragmentManager().beginTransaction().replace(R.id.profile_container, cFrag).commit();
     }

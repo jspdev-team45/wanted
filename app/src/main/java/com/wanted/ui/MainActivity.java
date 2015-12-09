@@ -1,7 +1,9 @@
 package com.wanted.ui;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
+import android.os.*;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,6 +38,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final String PREF_NAME = "loginPref";
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -43,7 +47,10 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private ImageView avatar;
 
-    private User user = null;
+    private JobFragment jFrag;
+    private PeopleFragment pFrag;
+
+    private User user = DataHolder.getInstance().getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +63,14 @@ public class MainActivity extends AppCompatActivity
         addListeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (jFrag != null && DataHolder.getInstance().getProfileUpdated() == true)
+            jFrag.doTheRest();
+    }
+
     public void getUserData() {
-        user = DataHolder.getInstance().getUser();
         if (user != null) {
             Toast.makeText(this, "Id is " + user.getId(), Toast.LENGTH_LONG).show();
         }
@@ -99,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         // avatar
-        avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar));
+        avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar2));
 
         // image loader
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
@@ -182,6 +195,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_posts) {
             Intent intent = new Intent(this, PostActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_logout) {
+            logOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -189,13 +204,24 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void logOut() {
+        SharedPreferences preferences =getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        finish();
+        System.exit(0);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        JobFragment jFrag = new JobFragment();
-        PeopleFragment pFrag = new PeopleFragment();
-        jFrag.setContext(MainActivity.this);
+        if (user.getRole() == Role.SEEKER) {
+            jFrag = new JobFragment();
+            jFrag.setContext(MainActivity.this);
+            adapter.addItem(jFrag, "Jobs");
+        }
+        pFrag = new PeopleFragment();
         pFrag.setContext(MainActivity.this);
-        adapter.addItem(jFrag, "Jobs");
         adapter.addItem(pFrag, "People");
         viewPager.setAdapter(adapter);
     }

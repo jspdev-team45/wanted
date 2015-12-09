@@ -8,7 +8,7 @@
     tools:context="com.wanted.ui.MyProfileActivity">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_basic_info_seeker"
+        android:id="@+id/detail_basic_info_seeker"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -97,7 +97,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_basic_info_recruiter"
+        android:id="@+id/detail_basic_info_recruiter"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -163,7 +163,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/profile_contact_info_card"
+        android:id="@+id/detail_contact_info_card"
         cardCornerRadius="20dp"
         cardElevation="20dp"
         cardUseCompatPadding="true"
@@ -246,7 +246,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/google"/>
+                android:src="@drawable/banner_default"/>
 
             <LinearLayout
                 style="@style/Widget.CardContent"

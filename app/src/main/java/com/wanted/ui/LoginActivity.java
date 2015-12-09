@@ -12,17 +12,25 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wanted.R;
+import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
 import com.wanted.entities.Recruiter;
 import com.wanted.entities.Role;
+import com.wanted.entities.Seeker;
 import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
 import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
 import com.wanted.util.ValidateUserInfo;
+import com.wanted.ws.remote.HttpClient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by xlin2
@@ -41,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private boolean remember;
+//    private int role = -1;
+    private User user;
 
     private LoginTask loginTask;
 
@@ -71,8 +81,15 @@ public class LoginActivity extends AppCompatActivity {
 
         remember = loginPreference.getBoolean("remember", false);
         if (remember == true) {
-            User user = new Recruiter("Hehe", email, password, Role.RECRUITER);
-            DataHolder.getInstance().setUser(user);
+            email = loginPreference.getString("email", "");
+            password = loginPreference.getString("password", "");
+//            role = loginPreference.getInt("role", 0);
+//            if (role == Role.SEEKER) {
+//                user = new Seeker(null, email, password, role);
+//            } else {
+//                user = new Recruiter(null, email, password, role);
+//            }
+//            DataHolder.getInstance().setUser(user);
             loginTask = new LoginTask();
             loginTask.execute((Void) null);
         }
@@ -86,8 +103,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (formValid() == false) return;
-                User user = new Recruiter("Hehe", email, password, Role.RECRUITER);
-                DataHolder.getInstance().setUser(user);
+//                User user = new Recruiter("Hehe", email, password, Role.RECRUITER);
+//                DataHolder.getInstance().setUser(user);
+//                jumpTo(MainActivity.class);
                 loginTask = new LoginTask();
                 loginTask.execute((Void) null);
             }
@@ -96,8 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
+                jumpTo(RegisterActivity.class);
             }
         });
     }
@@ -153,6 +170,16 @@ public class LoginActivity extends AppCompatActivity {
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
+            URL url = null;
+            try {
+                url = new URL(new AddrUtil().getAddress("Login"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if (url == null)
+                return false;
+            HttpClient client = new HttpClient(url);
+            response = client.sendToServer(packData());
             return true;
         }
 
@@ -163,36 +190,48 @@ public class LoginActivity extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             loginTask = null;
 
+            // Update ui
+            if (response == null)
+                new DialogUtil().showError(LoginActivity.this, "Unable to login.");
+            else if (response.getInfo().equals(Information.USER_NOT_EXIST))
+                new DialogUtil().showError(LoginActivity.this, "User not exist.");
+            else if (response.getInfo().equals(Information.WRONG_PWD))
+                new DialogUtil().showError(LoginActivity.this, "Wrong password.");
+            else {
+                User returnUser = (User) response.getContent();
+//                    role = returnUser.getRole();
+                DataHolder.getInstance().setUser(returnUser);
+                jumpTo(MainActivity.class);
+            }
+
             // set preference
             if (rememberBox.isChecked() && remember == false) {
                 editor.putBoolean("remember", true);
                 editor.putString("email", email);
                 editor.putString("password", password);
+//                    editor.putInt("role", role);
                 editor.commit();
             }
-
-            // jump
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-
-            // Update ui
-//            if (response == null)
-//                new DialogUtil().showError(LoginActivity.this, "Unable to login.");
-//            else if (response.getInfo().equals(Information.FAIL))
-//                new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
-//            else {
-//                user.setId(((User)(response.getContent())).getId());
-//                DataHolder.getInstance().setUser(user);
-//                jumpTo(MainActivity.class);
-//            }
 
         }
 
         @Override
         protected void onCancelled() {
             loginTask = null;
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
+    }
+
+    private Pack packData() {
+
+        Pack ret = new Pack(Information.LOGIN, email + ":" + password);
+
+        return ret;
+    }
+
+    private void jumpTo(Class<?> target) {
+        Intent intent = new Intent(getApplicationContext(), target);
+        startActivity(intent);
+        finish();
     }
 }

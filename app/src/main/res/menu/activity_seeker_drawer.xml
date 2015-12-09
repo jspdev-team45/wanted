@@ -18,6 +18,10 @@
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_menu_like"
             android:title="@string/menu_favorite_title" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/menu_log_out_title"/>
     </group>
 
 

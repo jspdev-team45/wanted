@@ -5,11 +5,11 @@ import android.util.Log;
 /**
  * Created by xlin2 on 2015/11/13.
  */
-public class InputException extends Exception {
+public class ClientException extends Exception {
     private int errNo;
     private String errMsg;
 
-    public InputException(ErrType type) {
+    public ClientException(ErrType type) {
         setErrNo(type.ordinal());
         setErrMsg(type.toString());
     }

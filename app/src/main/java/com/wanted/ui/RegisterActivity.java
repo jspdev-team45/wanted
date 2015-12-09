@@ -85,8 +85,9 @@ public class RegisterActivity extends AppCompatActivity {
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                jumpTo(LoginActivity.class);
+//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(intent);
             }
         });
     }
@@ -191,11 +192,11 @@ public class RegisterActivity extends AppCompatActivity {
             // Update ui
             if (response == null)
                 new DialogUtil().showError(RegisterActivity.this, "Unable to register.");
-            else if (response.getInfo().equals(Information.FAIL))
+            else if (response.getInfo().equals(Information.USER_EXIST))
                 new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
             else {
-                user.setId(((User)(response.getContent())).getId());
-                DataHolder.getInstance().setUser(user);
+                //user.setId(((User)(response.getContent())).getId());
+                DataHolder.getInstance().setUser((User) response.getContent());
                 jumpTo(MainActivity.class);
             }
 
@@ -218,6 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
         else {
             role = Role.RECRUITER;
             user = new Recruiter(name, password, email, role);
+            ((Recruiter) user).setCompanyID(-1);
         }
         Pack ret = new Pack(Information.REGISTER, user);
 
@@ -227,5 +229,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void jumpTo(Class<?> target) {
         Intent intent = new Intent(getApplicationContext(), target);
         startActivity(intent);
+        finish();
     }
 }

@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.wanted.R;
 import com.wanted.entities.Seeker;
 import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,14 +33,15 @@ import java.util.List;
  * Date: 15/11/6
  */
 public class ListAdapter extends BaseAdapter implements SectionIndexer {
-    private User[] data;
+    private List<User> data;
     private LayoutInflater inflater;
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
     private DisplayImageOptions options;
 
-    public ListAdapter(Context context, User[] data) {
+    public ListAdapter(Context context, List<User> data) {
         this.data = data;
-        Arrays.sort(this.data);
+        Collections.sort(this.data);
+//        Arrays.sort(this.data);
         inflater = LayoutInflater.from(context);
 
         options = new DisplayImageOptions.Builder()
@@ -54,14 +56,14 @@ public class ListAdapter extends BaseAdapter implements SectionIndexer {
     }
 
 
-    public void updateListView(Seeker[] data) {
+    public void updateListView(List<User> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
@@ -93,15 +95,15 @@ public class ListAdapter extends BaseAdapter implements SectionIndexer {
 
         if (position == getPositionForSection(section)) {
             holder.catalog.setVisibility(View.VISIBLE);
-            holder.catalog.setText(String.valueOf(data[position].getName().charAt(0)));
+            holder.catalog.setText(String.valueOf(data.get(position).getName().charAt(0)));
         }
         else {
             holder.catalog.setVisibility(View.GONE);
         }
 
-        holder.text.setText(data[position].getName());
-        Log.i("Output", data[position].getAvatar());
-        ImageLoader.getInstance().displayImage(data[position].getAvatar(), holder.image, options, animateFirstListener);
+        holder.text.setText(data.get(position).getName());
+        String avatarAddr = new AddrUtil().getImageAddress(data.get(position).getAvatar());
+        ImageLoader.getInstance().displayImage(avatarAddr, holder.image, options, animateFirstListener);
 
         return view;
     }
@@ -116,7 +118,7 @@ public class ListAdapter extends BaseAdapter implements SectionIndexer {
     public int getPositionForSection(int sectionIndex) {
         int l = getCount();
         for (int i = 0; i < l; ++i) {
-            if (data[i].getName().charAt(0) == sectionIndex)
+            if (data.get(i).getName().charAt(0) == sectionIndex)
                 return i;
         }
         return -1;
@@ -124,7 +126,7 @@ public class ListAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public int getSectionForPosition(int position) {
-        return data[position].getName().charAt(0);
+        return data.get(position).getName().charAt(0);
     }
 
     static class ViewHolder {
