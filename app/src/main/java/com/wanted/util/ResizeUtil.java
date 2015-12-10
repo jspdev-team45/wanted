@@ -72,6 +72,24 @@ public class ResizeUtil {
         return ret;
     }
 
+    public int[] resizeAvatar() {
+        // New width and height
+        int width;
+        int height;
+
+        // Changed size
+        if (swidth > LARGE) {
+            width = 225;
+            height = 225;
+        } else {
+            width = 150;
+            height = 150;
+        }
+
+        int[] ret = new int[] { width, height };
+        return ret;
+    }
+
     /**
      * Resize people image
      * @param drawable

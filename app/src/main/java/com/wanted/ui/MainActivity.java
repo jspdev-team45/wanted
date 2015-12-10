@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,13 +20,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wanted.R;
 import com.wanted.entities.Role;
 import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
 import com.wanted.util.DataHolder;
 import com.wanted.util.ResizeUtil;
 
@@ -46,11 +50,14 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ImageView avatar;
+    private TextView headerName;
+    private TextView headerEmail;
 
     private JobFragment jFrag;
     private PeopleFragment pFrag;
 
     private User user = DataHolder.getInstance().getUser();
+    private String role = user.getRole() == Role.SEEKER ? "Seeker" : "Recruiter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +93,8 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         avatar = (ImageView) findViewById(R.id.avatarImageView);
+        headerName = (TextView) findViewById(R.id.nav_header_name);
+        headerEmail = (TextView) findViewById(R.id.nav_header_email);
     }
 
     /**
@@ -112,7 +121,17 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         // avatar
-        avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar2));
+        if (user.getAvatar() != null) {
+            int[] size = new ResizeUtil(this).resizeAvatar();
+            String addr = new AddrUtil().getImageAddress(user.getAvatar());
+            Glide.with(MainActivity.this).load(addr).override(size[0], size[1]).into(avatar);
+        }
+        else
+            avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar_default));
+
+        // basic info
+        headerName.setText(user.getName() + " (" + role + ")");
+        headerEmail.setText(user.getEmail());
 
         // image loader
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();

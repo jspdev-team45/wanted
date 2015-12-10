@@ -62,9 +62,8 @@ public class PeopleFragment extends Fragment {
     private int preLen = 0;
     private int cursor = -1;
     private int otherId;
-    private Card targetCard;
     private int targetPos;
-    private final int MAX_FETCH = 4;
+    private Card targetCard;
 
     private boolean loading = true;
     private int previousTotal = 0;
@@ -210,6 +209,8 @@ public class PeopleFragment extends Fragment {
     }
 
     private void addCards() {
+        if (peopleList == null) return;
+
         int len = peopleList.size();
         for (int i = preLen; i < len; ++i) {
             String addr = new AddrUtil().getImageAddress(peopleList.get(i).getAvatar());
@@ -252,7 +253,8 @@ public class PeopleFragment extends Fragment {
     private OnActionClickListener followListener = new OnActionClickListener() {
         @Override
         public void onActionClicked(View view, Card card) {
-            otherId = peopleList.get(peopleListView.getAdapter().getPosition(card)).getId();
+            targetPos = peopleListView.getAdapter().getPosition(card);
+            otherId = peopleList.get(targetPos).getId();
             targetCard = card;
             followTask = new FollowTask();
             followTask.execute((Void) null);
@@ -390,7 +392,7 @@ public class PeopleFragment extends Fragment {
 
                 int uid = DataHolder.getInstance().getUser().getId();
                 HttpClient client = new HttpClient(url);
-                response = client.sendToServer(new Pack(Information.GET_PEOPLE, uid + ":" + otherId));
+                response = client.sendToServer(new Pack(Information.ADD_FOLLOW, uid + ":" + otherId));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -404,6 +406,7 @@ public class PeopleFragment extends Fragment {
             followTask = null;
 
             Toast.makeText(context, "Follow success!", Toast.LENGTH_SHORT).show();
+            peopleList.remove(targetPos);
             targetCard.setDismissible(true);
             targetCard.dismiss();
         }

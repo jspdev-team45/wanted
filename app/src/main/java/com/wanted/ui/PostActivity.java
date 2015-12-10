@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.baoyz.widget.PullRefreshLayout;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
 import com.wanted.R;
@@ -156,6 +157,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void addCards() {
+        if (postList == null) return;
         int len = postList.size();
         for (int i = preLen; i < len; ++i) {
             String addr = new AddrUtil().getImageAddress(postList.get(i).getCompany().getBanner());
@@ -167,13 +169,24 @@ public class PostActivity extends AppCompatActivity {
                     .setDescription(postList.get(i).getDescription())
                     .setDrawable(addr)
                     .addAction(R.id.left_text_button, new TextViewAction(PostActivity.this)
-                            .setText("Delete")
-                            .setTextColor(Color.BLUE))
+                            .setText("SHOW APPLICANTS")
+                            .setTextColor(Color.BLUE)
+                            .setListener(applicantsListener))
                     .endConfig()
                     .build();
             postListView.getAdapter().add(card);
         }
     }
+
+    private OnActionClickListener applicantsListener = new OnActionClickListener() {
+        @Override
+        public void onActionClicked(View view, Card card) {
+            int pid = postList.get(postListView.getAdapter().getPosition(card)).getPid();
+            Intent intent = new Intent(PostActivity.this, ApplicantsActivity.class);
+            intent.putExtra("pid", pid);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -201,12 +214,6 @@ public class PostActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
             try {
                 cursor = -1;
                 response = getResponse();
@@ -270,12 +277,6 @@ public class PostActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
             response = getResponse();
             return true;
         }
@@ -287,10 +288,6 @@ public class PostActivity extends AppCompatActivity {
             loadTask = null;
 
             ArrayList<Post> tempList = (ArrayList<Post>) response.getContent();
-//            ArrayList<Post> tempList = new ArrayList<Post>();
-//            tempList.add(postList.get(0));
-//            tempList.add(postList.get(1));
-//            tempList.add(postList.get(2));
             preLen = postList.size();
             postList.addAll(tempList);
 

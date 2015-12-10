@@ -127,4 +127,7 @@
     <string name="add_post_submit">SUBMIT</string>
     <string name="add_post_clear">CLEAR</string>
     <string name="post_recruiter">RECRUITER: </string>
+
+    <!--Applicants Page-->
+    <string name="title_activity_applicants">Applicants</string>
 </resources>

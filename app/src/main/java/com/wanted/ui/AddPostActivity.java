@@ -138,14 +138,6 @@ public class  AddPostActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // If there's no account registered, register the new account here.
-            //DefaultSocketClient client = new DefaultSocketClient("10.0.0.9", 8888);
-            //response = client.sendToServer(packData());
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             URL url = null;
             try {
                 url = new URL(new AddrUtil().getAddress("AddPost"));
@@ -180,6 +172,14 @@ public class  AddPostActivity extends AppCompatActivity {
 
     }
 
+    private Pack packData() {
+        Post addPost = new Post(title, desc, major);
+        addPost.setUid(DataHolder.getInstance().getUser().getId());
+        Pack ret = new Pack(Information.ADD_POST, addPost);
+
+        return ret;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -188,13 +188,5 @@ public class  AddPostActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private Pack packData() {
-        Post addPost = new Post(title, desc, major);
-        addPost.setUid(DataHolder.getInstance().getUser().getId());
-        Pack ret = new Pack(Information.ADD_POST, addPost);
-
-        return ret;
     }
 }

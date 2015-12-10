@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.baoyz.widget.PullRefreshLayout;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
@@ -47,19 +48,17 @@ public class JobFragment extends Fragment {
 
     private RefreshTask refreshTask;
     private LoadTask loadTask;
+    private ConnectTask connectTask;
 
     private MaterialListView jobListView;
     private PullRefreshLayout jobRefreshLayout;
     private LinearLayoutManager jobLayoutManager;
 
-//    private int[] companys = new int[]{R.string.company_google, R.string.company_facebook};
-//    private String[] descriptions = new String[]{"We are looking for a new software engineer",
-//                                                  "Looking for a front end engineer"};
-//    private int[] drawables = new int[]{R.drawable.banner_default, R.drawable.facebook};
     private ArrayList<Post> postList;
     private int preLen = 0;
     private int cursor = -1;
-    private final int MAX_FETCH = 4;
+    private int targetId;
+    private String targetServlet;
 
     private boolean loading = true;
     private int previousTotal = 0;
@@ -168,13 +167,13 @@ public class JobFragment extends Fragment {
 
             @Override
             public void onItemClick(Card card, int position) {
-                Intent intent = new Intent(getActivity(), JobDetailActivity.class);
-                intent.putExtra("post", postList.get(position));
-                startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(Card card, int position) {
+                Intent intent = new Intent(getActivity(), JobDetailActivity.class);
+                intent.putExtra("post", postList.get(position));
+                startActivity(intent);
             }
         });
 
@@ -216,6 +215,8 @@ public class JobFragment extends Fragment {
     }
 
     private void addCards() {
+        if (postList == null) return;
+
         int len = postList.size();
         for (int i = preLen; i < len; ++i) {
             String addr = new AddrUtil().getImageAddress(postList.get(i).getCompany().getBanner());
@@ -228,15 +229,37 @@ public class JobFragment extends Fragment {
                     .setDrawable(addr)
                     .addAction(R.id.right_text_button, new TextViewAction(getActivity())
                             .setText("Apply")
-                            .setTextColor(Color.BLUE))
+                            .setTextColor(Color.BLUE)
+                            .setListener(applyListener))
                     .addAction(R.id.left_text_button, new TextViewAction(getActivity())
                             .setText("Like")
-                            .setTextColor(Color.BLACK))
+                            .setTextColor(Color.BLACK)
+                            .setListener(likeListener))
                     .endConfig()
                     .build();
             jobListView.getAdapter().add(card);
         }
     }
+
+    private OnActionClickListener applyListener = new OnActionClickListener() {
+        @Override
+        public void onActionClicked(View view, Card card) {
+            targetId = postList.get(jobListView.getAdapter().getPosition(card)).getPid();
+            targetServlet = "AddApply";
+            connectTask = new ConnectTask();
+            connectTask.execute((Void) null);
+        }
+    };
+
+    private OnActionClickListener likeListener = new OnActionClickListener() {
+        @Override
+        public void onActionClicked(View view, Card card) {
+            targetId = postList.get(jobListView.getAdapter().getPosition(card)).getPid();
+            targetServlet = "AddLike";
+            connectTask = new ConnectTask();
+            connectTask.execute((Void) null);
+        }
+    };
 
     public class RefreshTask extends AsyncTask<Void, Void, Boolean> {
         private Pack response;
@@ -254,11 +277,6 @@ public class JobFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
             cursor = -1;
             response = getResponse();
@@ -332,10 +350,6 @@ public class JobFragment extends Fragment {
             loadTask = null;
 
             ArrayList<Post> tempList = (ArrayList<Post>) response.getContent();
-//            ArrayList<Post> tempList = new ArrayList<Post>();
-//            tempList.add(postList.get(0));
-//            tempList.add(postList.get(1));
-//            tempList.add(postList.get(2));
             preLen = postList.size();
             postList.addAll(tempList);
 
@@ -356,6 +370,58 @@ public class JobFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
+    }
+
+    public class ConnectTask extends AsyncTask<Void, Void, Boolean> {
+        private Pack response;
+
+        ConnectTask() {
+            response = null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Disable interaction
+            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                URL url = null;
+                try {
+                    url = new URL(new AddrUtil().getAddress(targetServlet));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                if (url == null) {
+                    return null;
+                }
+
+                int uid = DataHolder.getInstance().getUser().getId();
+                HttpClient client = new HttpClient(url);
+                response = client.sendToServer(new Pack(Information.ADD_CONNECT, uid + ":" + targetId));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            // Cancel the progress spinner and enable interaction
+            ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            connectTask = null;
+
+            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            connectTask = null;
+            ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
     }
 
     private Pack getResponse() {
