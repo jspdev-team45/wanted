@@ -114,42 +114,6 @@ public class PeopleFragment extends Fragment {
         firstRefresh();
     }
 
-    /**
-     * For debug use
-     */
-    private void initPeopleList() {
-        peopleList = new ArrayList<User>();
-        Seeker people1 = new Seeker("Alice", null, "alice@aa.com", Role.SEEKER);
-        people1.setId(8);
-        people1.setAvatar("people_ann.jpg");
-        people1.setPhone("111111");
-        people1.setCollege("Some college");
-        people1.setMajor("Some major");
-        peopleList.add(people1);
-
-        Seeker people2 = new Seeker("John", null, "john@aa.com", Role.SEEKER);
-        people2.setId(7);
-        people2.setAvatar("people_john.jpg");
-        people2.setPhone("22222222");
-        people2.setCollege("Some college");
-        people2.setMajor("Some major");
-        peopleList.add(people2);
-
-        Recruiter people3 = new Recruiter("Tom", null, "tom@aa.com", Role.RECRUITER);
-        people3.setId(6);
-        people3.setCompanyID(-1);
-        people3.setAvatar("people_tom.jpg");
-        people3.setPhone("333333333");
-        peopleList.add(people3);
-
-        Recruiter people4 = new Recruiter("Mike", null, "mike@aa.com", Role.RECRUITER);
-        people4.setId(5);
-        people4.setCompanyID(-1);
-        people4.setAvatar("people_mike.jpg");
-        people4.setPhone("44444444");
-        peopleList.add(people4);
-    }
-
     private void firstRefresh() {
         peopleRefreshLayout.setRefreshing(true);
         refreshTask = new RefreshTask();
@@ -252,6 +216,7 @@ public class PeopleFragment extends Fragment {
         public void onActionClicked(View view, Card card) {
             targetPos = peopleListView.getAdapter().getPosition(card);
             otherId = peopleList.get(targetPos).getId();
+            if (otherId == DataHolder.getInstance().getUser().getId()) return;
             targetCard = card;
             followTask = new FollowTask();
             followTask.execute((Void) null);
