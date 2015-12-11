@@ -271,8 +271,8 @@ public class JobFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // Disable interaction
-            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -327,8 +327,8 @@ public class JobFragment extends Fragment {
         protected void onPreExecute() {
             // Disable interaction
             Toast.makeText(context, "Loading more...", Toast.LENGTH_LONG).show();
-            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -382,8 +382,8 @@ public class JobFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // Disable interaction
-            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

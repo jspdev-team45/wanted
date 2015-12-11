@@ -283,8 +283,8 @@ public class ProfileEditFragment extends Fragment {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(context, "Updating profile...");
-            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

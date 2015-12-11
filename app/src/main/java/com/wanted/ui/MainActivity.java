@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateAvatar() {
+        user = DataHolder.getInstance().getUser();
         if (user.getAvatar() != null) {
             int[] size = new ResizeUtil(this).resizeAvatar();
             String addr = new AddrUtil().getImageAddress(user.getAvatar());

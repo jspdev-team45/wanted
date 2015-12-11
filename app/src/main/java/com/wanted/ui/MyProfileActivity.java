@@ -78,7 +78,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-        Glide.with(this).load(R.drawable.avatar2).centerCrop().into(avatarView);
+        Glide.with(this).load(R.drawable.avatar_default).centerCrop().into(avatarView);
     }
 
     private void addListeners() {

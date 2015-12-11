@@ -208,8 +208,8 @@ public class PostActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // Disable interaction
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -271,8 +271,8 @@ public class PostActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Disable interaction
             Toast.makeText(PostActivity.this, "Loading more...", Toast.LENGTH_LONG).show();
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
