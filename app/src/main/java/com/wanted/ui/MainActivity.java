@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         if (jFrag != null && DataHolder.getInstance().getProfileUpdated() == true)
             jFrag.doTheRest();
+
+        if (DataHolder.getInstance().getProfileUpdated() == true)
+            updateAvatar();
+
     }
 
     public void getUserData() {
@@ -121,13 +125,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         // avatar
-        if (user.getAvatar() != null) {
-            int[] size = new ResizeUtil(this).resizeAvatar();
-            String addr = new AddrUtil().getImageAddress(user.getAvatar());
-            Glide.with(MainActivity.this).load(addr).override(size[0], size[1]).into(avatar);
-        }
-        else
-            avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar_default));
+        updateAvatar();
 
         // basic info
         headerName.setText(user.getName() + " (" + role + ")");
@@ -136,6 +134,16 @@ public class MainActivity extends AppCompatActivity
         // image loader
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
+    }
+
+    private void updateAvatar() {
+        if (user.getAvatar() != null) {
+            int[] size = new ResizeUtil(this).resizeAvatar();
+            String addr = new AddrUtil().getImageAddress(user.getAvatar());
+            Glide.with(MainActivity.this).load(addr).override(size[0], size[1]).into(avatar);
+        }
+        else
+            avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar_default));
     }
 
     private void setNavMenu() {

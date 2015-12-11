@@ -228,13 +228,9 @@ public class PeopleFragment extends Fragment {
                             requestCreator.resize(size[0], size[1]).centerCrop();
                         }
                     })
-                    .addAction(R.id.right_text_button, new TextViewAction(getActivity())
-                            .setText("Chat")
-                            .setTextColor(Color.BLUE)
-                            .setListener(chatListener))
                     .addAction(R.id.left_text_button, new TextViewAction(getActivity())
                             .setText("Follow")
-                            .setTextColor(Color.BLACK)
+                            .setTextColor(Color.BLUE)
                             .setListener(followListener))
                     .endConfig()
                     .build();
