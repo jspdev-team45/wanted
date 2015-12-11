@@ -44,7 +44,7 @@ public class ResizeUtil {
     }
 
     /**
-     * Resize an avatar image
+     * Resize an avatar_default image
      * @param drawable
      * @return
      */

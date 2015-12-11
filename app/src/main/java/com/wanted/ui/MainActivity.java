@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         // tab layout
         tabLayout.setupWithViewPager(viewPager);
 
-        // avatar
+        // avatar_default
         updateAvatar();
 
         // basic info
