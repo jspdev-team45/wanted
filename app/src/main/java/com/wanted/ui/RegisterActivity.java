@@ -160,8 +160,8 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(RegisterActivity.this, "Processing...");
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

@@ -286,28 +286,20 @@ public class ProfileEditFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // Show the spinner and disable interaction
-            try {
-                pd = new DialogUtil().showProgress(context, "Updating profile...");
-                ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            pd = new DialogUtil().showProgress(context, "Updating profile...");
+            ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try {
-                if (role == Role.RECRUITER) {
-                    updateCompany();
-                    if (success == false)
-                        return false;
-                }
-                System.out.println("Update company finish.");
-                updateUser();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (role == Role.RECRUITER) {
+                updateCompany();
+                if (success == false)
+                    return false;
             }
+            System.out.println("Update company finish.");
+            updateUser();
             return success;
         }
 
@@ -318,18 +310,14 @@ public class ProfileEditFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             profileTask = null;
 
-            try {
-                //
-                if (success == false || response == null || response.getInfo() == Information.FAIL) {
-                    new DialogUtil().showError(context, "Unable to update.");
-                } else {
-                    DataHolder.getInstance().setUser((User) response.getContent());
-                    DataHolder.getInstance().setProfileUpdated(true);
-                    Fragment currentFragment = ((Activity) context).getFragmentManager().findFragmentById(R.id.profile_container);
-                    ((ProfileContentFragment) currentFragment).updateProfile();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            //
+            if (success == false || response == null || response.getInfo() == Information.FAIL) {
+                new DialogUtil().showError(context, "Unable to update.");
+            } else {
+                DataHolder.getInstance().setUser((User) response.getContent());
+                DataHolder.getInstance().setProfileUpdated(true);
+                Fragment currentFragment = ((Activity) context).getFragmentManager().findFragmentById(R.id.profile_container);
+                ((ProfileContentFragment) currentFragment).updateProfile();
             }
         }
 

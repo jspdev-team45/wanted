@@ -82,7 +82,6 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-//        Glide.with(this).load(R.drawable.avatar_default).centerCrop().into(avatarView);
         updateAvatar();
     }
 

@@ -111,8 +111,8 @@ public class ApplicantsActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Disable interaction
             pd = new DialogUtil().showProgress(ApplicantsActivity.this, "Loading applicants list...");
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
