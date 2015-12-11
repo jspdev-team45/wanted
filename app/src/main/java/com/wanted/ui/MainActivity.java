@@ -143,9 +143,9 @@ public class MainActivity extends AppCompatActivity
             int[] size = new ResizeUtil(this).resizeAvatar();
             String addr = new AddrUtil().getImageAddress(user.getAvatar());
             Glide.with(MainActivity.this).load(addr)
-                                          .placeholder(R.drawable.avatar_placeholder)
+                                          .placeholder(R.drawable.avatar_placeholder2)
                                           .override(size[0], size[1])
-                                          .dontAnimate()
+                                          .animate(android.R.anim.fade_in)
                                           .into(avatar);
         }
         else
