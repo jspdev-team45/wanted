@@ -225,7 +225,8 @@ public class PeopleFragment extends Fragment {
                         @Override
                         public void onImageConfigure(@NonNull final RequestCreator requestCreator) {
                             int[] size = new ResizeUtil(context).resizePeople();
-                            requestCreator.resize(size[0], size[1]).centerCrop();
+                            requestCreator.resize(size[0], size[1])
+                                    .centerCrop();
                         }
                     })
                     .addAction(R.id.left_text_button, new TextViewAction(getActivity())

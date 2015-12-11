@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.wanted.R;
 import com.wanted.entities.Company;
 import com.wanted.entities.Information;
@@ -158,10 +159,13 @@ public class ProfileEditFragment extends Fragment {
             setText(editCompany, company.getName());
             setText(editCompanyLoc, company.getLocation());
             setText(editCompanyDesc, company.getDescription());
-//            if (company.getBanner() != null) {
-//                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
-//                Glide.with(context).load(bannerAddr).into(editBanner);
-//            }
+            if (company.getBanner() != null) {
+                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
+                Glide.with(context).load(bannerAddr)
+                        .placeholder(R.drawable.banner_placeholder)
+                        .dontAnimate()
+                        .into(editBanner);
+            }
         }
     }
 
@@ -282,20 +286,28 @@ public class ProfileEditFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // Show the spinner and disable interaction
-            pd = new DialogUtil().showProgress(context, "Updating profile...");
-            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            try {
+                pd = new DialogUtil().showProgress(context, "Updating profile...");
+                ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (role == Role.RECRUITER) {
-                updateCompany();
-                if (success == false)
-                    return false;
+            try {
+                if (role == Role.RECRUITER) {
+                    updateCompany();
+                    if (success == false)
+                        return false;
+                }
+                System.out.println("Update company finish.");
+                updateUser();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            System.out.println("Update company finish.");
-            updateUser();
             return success;
         }
 
@@ -306,15 +318,18 @@ public class ProfileEditFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             profileTask = null;
 
-            //
-            if (success == false || response == null || response.getInfo() == Information.FAIL) {
-                new DialogUtil().showError(context, "Unable to update.");
-            }
-            else {
-                DataHolder.getInstance().setUser((User) response.getContent());
-                DataHolder.getInstance().setProfileUpdated(true);
-                Fragment currentFragment = ((Activity)context).getFragmentManager().findFragmentById(R.id.profile_container);
-                ((ProfileContentFragment) currentFragment).updateProfile();
+            try {
+                //
+                if (success == false || response == null || response.getInfo() == Information.FAIL) {
+                    new DialogUtil().showError(context, "Unable to update.");
+                } else {
+                    DataHolder.getInstance().setUser((User) response.getContent());
+                    DataHolder.getInstance().setProfileUpdated(true);
+                    Fragment currentFragment = ((Activity) context).getFragmentManager().findFragmentById(R.id.profile_container);
+                    ((ProfileContentFragment) currentFragment).updateProfile();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -367,9 +382,12 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private Pack packCompanyData() {
-        Bitmap banner = ((BitmapDrawable)editBanner.getDrawable()).getBitmap();
-        banner = Bitmap.createScaledBitmap(banner, editBanner.getMeasuredWidth(),
-                                           editBanner.getMeasuredHeight(), false);
+//        Bitmap banner = ((BitmapDrawable)editBanner.getDrawable()).getBitmap();
+//        banner = Bitmap.createScaledBitmap(banner, editBanner.getMeasuredWidth(),
+//                                           editBanner.getMeasuredHeight(), false);
+        Drawable drawable = editBanner.getDrawable();
+        Bitmap banner = new ImageUtil().convertToBitmap(drawable, editBanner.getMeasuredWidth(),
+                editBanner.getMeasuredHeight());
         Company company = new Company();
         company.setName(companyName);
         company.setLocation(companyLoc);

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.wanted.R;
 import com.wanted.entities.Role;
 import com.wanted.entities.User;
@@ -140,15 +141,17 @@ public class MainActivity extends AppCompatActivity
         if (user.getAvatar() != null) {
             int[] size = new ResizeUtil(this).resizeAvatar();
             String addr = new AddrUtil().getImageAddress(user.getAvatar());
-            Glide.with(MainActivity.this).load(addr).override(size[0], size[1]).into(avatar);
+            Glide.with(MainActivity.this).load(addr)
+                                          .placeholder(R.drawable.avatar_placeholder)
+                                          .override(size[0], size[1])
+                                          .dontAnimate()
+                                          .into(avatar);
         }
         else
             avatar.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar_default));
     }
 
     private void setNavMenu() {
-//        navigationView.getMenu().clear();
-//        navigationView.inflateMenu(R.menu.activity_recruiter_drawer);
         if (user != null) {
             if (user.getRole() == Role.RECRUITER) {
                 navigationView.getMenu().clear();
@@ -231,6 +234,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Log out from the application and clear history
+     */
     private void logOut() {
         SharedPreferences preferences =getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.wanted.R;
+import com.wanted.entities.User;
+import com.wanted.util.AddrUtil;
+import com.wanted.util.DataHolder;
+import com.wanted.util.ResizeUtil;
 import com.wanted.ws.local.ChangePhotoService;
 
 /**
@@ -28,8 +32,6 @@ public class MyProfileActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
     private ImageView avatarView;
-    private ImageView targetView;
-    private ImageView editBanner;
     private FloatingActionButton editFab;
     private FloatingActionButton saveFab;
 
@@ -37,6 +39,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private ProfileContentFragment cFrag;
 
     private ChangePhotoService changePhoto;
+
+    private User user = DataHolder.getInstance().getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,23 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-        Glide.with(this).load(R.drawable.avatar2).centerCrop().into(avatarView);
+//        Glide.with(this).load(R.drawable.avatar_default).centerCrop().into(avatarView);
+        updateAvatar();
+    }
+
+    private void updateAvatar() {
+        if (user.getAvatar() != null) {
+            int[] size = new ResizeUtil(this).resizeAvatar();
+            String addr = new AddrUtil().getImageAddress(user.getAvatar());
+            Glide.with(MyProfileActivity.this).load(addr)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .override(size[0], size[1])
+                    .centerCrop()
+                    .dontAnimate()
+                    .into(avatarView);
+        }
+        else
+            avatarView.setImageDrawable(new ResizeUtil(this).resizeAvatar(R.drawable.avatar_default));
     }
 
     private void addListeners() {

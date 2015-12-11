@@ -135,7 +135,10 @@ public class PeopleDetailActivity extends AppCompatActivity {
     private void loadBackdrop() {
         if (user.getAvatar() != null) {
             String avatarAddr = new AddrUtil().getImageAddress(user.getAvatar());
-            Glide.with(PeopleDetailActivity.this).load(avatarAddr).into(imageAvatar);
+            Glide.with(PeopleDetailActivity.this).load(avatarAddr)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .dontAnimate()
+                    .into(imageAvatar);
         }
         //Glide.with(this).load(R.drawable.people_john).centerCrop().into(imageAvatar);
     }
@@ -240,7 +243,10 @@ public class PeopleDetailActivity extends AppCompatActivity {
         setText(textCompanyDesc, company.getDescription());
         if (company.getBanner() != null) {
             String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
-            Glide.with(PeopleDetailActivity.this).load(bannerAddr).into(imageBanner);
+            Glide.with(PeopleDetailActivity.this).load(bannerAddr)
+                    .placeholder(R.drawable.banner_placeholder)
+                    .dontAnimate()
+                    .into(imageBanner);
         }
     }
 

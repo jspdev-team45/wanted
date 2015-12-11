@@ -121,10 +121,10 @@ public class ProfileContentFragment extends Fragment {
             recruiterBasicInfo.setVisibility(View.VISIBLE);
             otherInfo.setVisibility(View.GONE);
             companyInfo.setVisibility(View.VISIBLE);
-            if (((Recruiter) user).getCompanyID() != -1) {
-                getProfileTask = new GetProfileTask();
-                getProfileTask.execute((Void) null);
-            }
+//            if (((Recruiter) user).getCompanyID() != -1) {
+//                getProfileTask = new GetProfileTask();
+//                getProfileTask.execute((Void) null);
+//            }
         }
         updateProfile();
     }
@@ -135,7 +135,11 @@ public class ProfileContentFragment extends Fragment {
 
         if (user.getAvatar() != null) {
             String avatarAddr = new AddrUtil().getImageAddress(user.getAvatar());
-            Glide.with(context).load(avatarAddr).into(imgAvatar);
+            Glide.with(context).load(avatarAddr)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .centerCrop()
+                    .dontAnimate()
+                    .into(imgAvatar);
         }
         setText(textName, user.getRealName());
         setText(textEmail, user.getEmail());
@@ -149,14 +153,23 @@ public class ProfileContentFragment extends Fragment {
         else if (role == Role.RECRUITER) {
             Recruiter recruiter = (Recruiter) user;
             setText(textDepart, recruiter.getDepartment());
-            if (company == null) company = new Company();
-            setText(textCompany, company.getName());
-            setText(textCompanyLoc, company.getLocation());
-            setText(textCompanyDesc, company.getDescription());
-            if (company.getBanner() != null) {
-                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
-                Glide.with(context).load(bannerAddr).into(imgBanner);
+            if (((Recruiter) user).getCompanyID() != -1) {
+                getProfileTask = new GetProfileTask();
+                getProfileTask.execute((Void) null);
             }
+            else {
+                company = new Company();
+                setText(textCompany, company.getName());
+                setText(textCompanyLoc, company.getLocation());
+                setText(textCompanyDesc, company.getDescription());
+            }
+//            if (company.getBanner() != null) {
+//                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
+//                Glide.with(context).load(bannerAddr)
+//                        .placeholder(R.drawable.banner_placeholder)
+//                        .dontAnimate()
+//                        .into(imgBanner);
+//            }
         }
     }
 
@@ -215,6 +228,17 @@ public class ProfileContentFragment extends Fragment {
                 new DialogUtil().showError(context, "Unable to fetch profile information.");
             else {
                 DataHolder.getInstance().setCompany((Company) response.getContent());
+                Company company = (Company) response.getContent();
+                setText(textCompany, company.getName());
+                setText(textCompanyLoc, company.getLocation());
+                setText(textCompanyDesc, company.getDescription());
+                if (company.getBanner() != null) {
+                    String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
+                    Glide.with(context).load(bannerAddr)
+                            .placeholder(R.drawable.banner_placeholder)
+                            .dontAnimate()
+                            .into(imgBanner);
+                }
             }
         }
 
