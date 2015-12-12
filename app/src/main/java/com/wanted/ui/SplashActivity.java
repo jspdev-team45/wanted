@@ -6,6 +6,10 @@ import android.os.Handler;
 import android.os.Bundle;
 import com.wanted.R;
 
+/**
+ * Created by xlin2
+ * The first activity user will see, which is a splash screen showing the app logo
+ */
 public class SplashActivity extends Activity {
 
     private static int SPLASH_TIME_OUT = 2000;

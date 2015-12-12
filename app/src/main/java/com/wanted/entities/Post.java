@@ -71,7 +71,6 @@ public class Post implements Serializable {
         this.description = description;
     }
 
-
     public String getSuitMajor() {
         return suitMajor;
     }

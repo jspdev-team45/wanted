@@ -87,8 +87,6 @@ public class FollowerActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(FollowerActivity.this, "Fetch list...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

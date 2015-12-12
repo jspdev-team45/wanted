@@ -44,6 +44,9 @@ public class HttpClient implements HttpClientInterface, ClientConstants {
         } catch (IOException e) {
             if (DEBUG) System.err.println("Unable to connect " + url.toString());
             return false;
+        } catch (Exception e) {
+            if (DEBUG) System.err.println("Unable to connect " + url.toString());
+            return false;
         }
 
         return true;
@@ -85,6 +88,8 @@ public class HttpClient implements HttpClientInterface, ClientConstants {
             writer.close();
             connection = null;
         } catch (IOException e) {
+            if (DEBUG) System.err.println("Error closing connection to " + url.toString());
+        } catch (Exception e) {
             if (DEBUG) System.err.println("Error closing connection to " + url.toString());
         }
     }

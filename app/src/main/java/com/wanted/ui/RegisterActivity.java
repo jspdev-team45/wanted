@@ -36,6 +36,7 @@ import java.net.URL;
 
 /**
  * Created by xlin2
+ * Activity to create a new account
  */
 public class RegisterActivity extends AppCompatActivity {
     private EditText emailEdit;
@@ -86,8 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpTo(LoginActivity.class);
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
             }
         });
     }
@@ -160,15 +159,10 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(RegisterActivity.this, "Processing...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // If there's no account registered, register the new account here.
-//            DefaultSocketClient client = new DefaultSocketClient(ClientConstants.IP,
-//                                                                  ClientConstants.PORT);
             URL url = null;
             try {
                 url = new URL(new AddrUtil().getAddress("Register"));
@@ -195,7 +189,6 @@ public class RegisterActivity extends AppCompatActivity {
             else if (response.getInfo().equals(Information.USER_EXIST))
                 new DialogUtil().showError(RegisterActivity.this, "Username or email exists.");
             else {
-                //user.setId(((User)(response.getContent())).getId());
                 DataHolder.getInstance().setUser((User) response.getContent());
                 jumpTo(MainActivity.class);
             }

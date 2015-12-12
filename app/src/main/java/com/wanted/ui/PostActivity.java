@@ -38,6 +38,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Created by xlin2
+ * Activity to show a list of job information
+ */
 public class PostActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton addPostFab;
@@ -156,6 +160,9 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Add job cards to the card list
+     */
     private void addCards() {
         if (postList == null) return;
         int len = postList.size();
@@ -207,9 +214,6 @@ public class PostActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            // Disable interaction
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -232,7 +236,6 @@ public class PostActivity extends AppCompatActivity {
             try {
                 // Get job array
                 if (postList != null) postList.clear();
-//            initPostList();
                 postList = (ArrayList<Post>) response.getContent();
                 preLen = 0;
 
@@ -271,8 +274,6 @@ public class PostActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Disable interaction
             Toast.makeText(PostActivity.this, "Loading more...", Toast.LENGTH_LONG).show();
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -297,7 +298,7 @@ public class PostActivity extends AppCompatActivity {
             if (tempList.size() <= 0)
                 Toast.makeText(PostActivity.this, "All data has been fetched", Toast.LENGTH_LONG).show();
 
-            //
+            // Update loading parameters
             int size = postList.size();
             cursor = size == 0 ? 0 : postList.get(size - 1).getPid();
         }

@@ -1,8 +1,6 @@
 package com.wanted.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +17,6 @@ import com.wanted.R;
 import com.wanted.entities.Information;
 import com.wanted.entities.Pack;
 import com.wanted.entities.Post;
-import com.wanted.entities.Role;
 import com.wanted.util.AddrUtil;
 import com.wanted.util.DataHolder;
 import com.wanted.util.DialogUtil;
@@ -28,6 +25,10 @@ import com.wanted.ws.remote.HttpClient;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Created by xlin2 on 2015/11/13.
+ * Activity to add a new job information
+ */
 public class  AddPostActivity extends AppCompatActivity {
     private EditText editTitle;
     private EditText editDesc;
@@ -132,8 +133,6 @@ public class  AddPostActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(AddPostActivity.this, "Processing...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

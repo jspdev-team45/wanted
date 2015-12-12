@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Author: Junjian Xie
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/12
+ * This class is used for storing company information, including its name, location, and description
  */
 public class Company implements Serializable {
     private static final long serialVersionUID = 1L;

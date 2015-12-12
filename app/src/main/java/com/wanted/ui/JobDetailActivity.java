@@ -100,7 +100,6 @@ public class JobDetailActivity extends AppCompatActivity {
             String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
             Glide.with(this).load(bannerAddr).into(imageView);
         }
-//        Glide.with(this).load(R.drawable.banner_default).centerCrop().into(imageView);
     }
 
     private void setText(TextView targetView, String text) {

@@ -83,8 +83,6 @@ public class JobFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_jobs, container, false);
         findViews(view);
         doTheRest();
-//        initViews();
-//        addListeners();
         return view;
     }
 
@@ -113,41 +111,7 @@ public class JobFragment extends Fragment {
         jobLayoutManager = new LinearLayoutManager(context);
         jobListView.setLayoutManager(jobLayoutManager);
         jobListView.setDrawingCacheEnabled(true);
-        //initPostList();
         firstRefresh();
-    }
-
-    /**
-     * For debug use
-     */
-    private void initPostList() {
-        postList = new ArrayList<Post>();
-        Post post1 = new Post("Software enginner", "We are looking for a new software engineer", "Software engineer");
-        post1.setPid(5);
-        Recruiter people1 = new Recruiter("Tom", null, "tom@aa.com", Role.RECRUITER);
-        people1.setId(6);
-        people1.setCompanyID(-1);
-        people1.setAvatar("people_tom.jpg");
-        people1.setPhone("333333333");
-        post1.setRecruiter(people1);
-        Company company1 = new Company("Google", "banner_default_default.jpg", "Company description1", "Some street, Pittsburgh");
-        post1.setCompany(company1);
-        postList.add(post1);
-
-        Post post2 = new Post("Computer enginner", "Looking for a new computer engineer", "Electrical engineer");
-        post1.setPid(4);
-        Recruiter people2 = new Recruiter("Mike", null, "mike@aa.com", Role.RECRUITER);
-        people2.setId(5);
-        people2.setCompanyID(-1);
-        people2.setAvatar("people_mike.jpg");
-        people2.setPhone("4444444");
-        post2.setRecruiter(people2);
-        Company company2 = new Company("Facebook", "facebook.jpg", "Company description2", "Some street, SV");
-        post2.setCompany(company2);
-        postList.add(post2);
-
-        postList.add(post1);
-        postList.add(post2);
     }
 
     /**
@@ -270,9 +234,6 @@ public class JobFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // Disable interaction
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -291,7 +252,6 @@ public class JobFragment extends Fragment {
 
             // Get job array
             if (postList != null) postList.clear();
-//            initPostList();
             postList = (ArrayList<Post>) response.getContent();
             preLen = 0;
 
@@ -327,17 +287,10 @@ public class JobFragment extends Fragment {
         protected void onPreExecute() {
             // Disable interaction
             Toast.makeText(context, "Loading more...", Toast.LENGTH_LONG).show();
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
             response = getResponse();
             return true;
@@ -381,9 +334,6 @@ public class JobFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // Disable interaction
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

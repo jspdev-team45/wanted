@@ -117,8 +117,6 @@ public class FavoriteActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Disable interaction
             pd = new DialogUtil().showProgress(FavoriteActivity.this, "Loading favorite list...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

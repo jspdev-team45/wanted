@@ -1,20 +1,15 @@
 package com.wanted.ui;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.wanted.R;
@@ -26,6 +21,7 @@ import com.wanted.ws.local.ChangePhotoService;
 
 /**
  * Created by xlin2
+ * Activity to show user profile
  */
 public class MyProfileActivity extends AppCompatActivity {
 
@@ -85,6 +81,9 @@ public class MyProfileActivity extends AppCompatActivity {
         updateAvatar();
     }
 
+    /**
+     * Update avatar image
+     */
     private void updateAvatar() {
         if (user.getAvatar() != null) {
             int[] size = new ResizeUtil(this).resizeAvatar();
@@ -118,6 +117,9 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Switch to edit profile page
+     */
     private void switchToEdit() {
         editFab.setVisibility(View.GONE);
         saveFab.setVisibility(View.VISIBLE);
@@ -140,6 +142,9 @@ public class MyProfileActivity extends AppCompatActivity {
         return eFrag.saveChange();
     }
 
+    /**
+     * Switch to profile content page
+     */
     private void switchToContent() {
         editFab.setVisibility(View.VISIBLE);
         saveFab.setVisibility(View.GONE);

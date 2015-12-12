@@ -32,6 +32,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
+ * Created by xlin2
+ * Fragment to show user profile
  */
 public class ProfileContentFragment extends Fragment {
     private Context context;
@@ -121,10 +123,6 @@ public class ProfileContentFragment extends Fragment {
             recruiterBasicInfo.setVisibility(View.VISIBLE);
             otherInfo.setVisibility(View.GONE);
             companyInfo.setVisibility(View.VISIBLE);
-//            if (((Recruiter) user).getCompanyID() != -1) {
-//                getProfileTask = new GetProfileTask();
-//                getProfileTask.execute((Void) null);
-//            }
         }
         updateProfile();
     }
@@ -163,13 +161,6 @@ public class ProfileContentFragment extends Fragment {
                 setText(textCompanyLoc, company.getLocation());
                 setText(textCompanyDesc, company.getDescription());
             }
-//            if (company.getBanner() != null) {
-//                String bannerAddr = new AddrUtil().getImageAddress(company.getBanner());
-//                Glide.with(context).load(bannerAddr)
-//                        .placeholder(R.drawable.banner_placeholder)
-//                        .dontAnimate()
-//                        .into(imgBanner);
-//            }
         }
     }
 
@@ -195,8 +186,6 @@ public class ProfileContentFragment extends Fragment {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(context, "Fetching information...");
-//            ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -223,7 +212,7 @@ public class ProfileContentFragment extends Fragment {
             ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             getProfileTask = null;
 
-            //
+            // Did not get response from server
             if (response == null || response.getInfo() == Information.FAIL)
                 new DialogUtil().showError(context, "Unable to fetch profile information.");
             else {

@@ -59,7 +59,6 @@ public class SideBar extends View {
 
         for (int i = 0; i < b.length; i++) {
             paint.setColor(Color.rgb(33, 65, 98));
-            // paint.setColor(Color.WHITE);
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             paint.setTextSize(new ResizeUtil(this.getContext()).sideBarSize());
@@ -118,8 +117,6 @@ public class SideBar extends View {
     }
 
     /**
-     * 向外公开的方法
-     *
      * @param onTouchingLetterChangedListener
      */
     public void setOnTouchingLetterChangedListener(
@@ -128,10 +125,7 @@ public class SideBar extends View {
     }
 
     /**
-     * 接口
-     *
-     * @author coder
-     *
+     * Called when user touches the letter
      */
     public interface OnTouchingLetterChangedListener {
         public void onTouchingLetterChanged(String s);

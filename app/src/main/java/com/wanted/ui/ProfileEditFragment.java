@@ -41,7 +41,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- *
+ * Created by xlin2
+ * Fragment to show profile form
  */
 public class ProfileEditFragment extends Fragment {
     private Context context;
@@ -213,7 +214,7 @@ public class ProfileEditFragment extends Fragment {
     }
 
     /**
-     *
+     * Get all the values from the profile form
      */
     private void getFormValue() {
         name = editName.getText().toString();
@@ -272,7 +273,7 @@ public class ProfileEditFragment extends Fragment {
     }
 
     /**
-     *
+     * Task to send profile information to server
      */
     public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
         private Pack response;
@@ -310,7 +311,7 @@ public class ProfileEditFragment extends Fragment {
             ((Activity)context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             profileTask = null;
 
-            //
+            // Did not get response from server
             if (success == false || response == null || response.getInfo() == Information.FAIL) {
                 new DialogUtil().showError(context, "Unable to update.");
             } else {
@@ -370,9 +371,6 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private Pack packCompanyData() {
-//        Bitmap banner = ((BitmapDrawable)editBanner.getDrawable()).getBitmap();
-//        banner = Bitmap.createScaledBitmap(banner, editBanner.getMeasuredWidth(),
-//                                           editBanner.getMeasuredHeight(), false);
         Drawable drawable = editBanner.getDrawable();
         Bitmap banner = new ImageUtil().convertToBitmap(drawable, editBanner.getMeasuredWidth(),
                 editBanner.getMeasuredHeight());

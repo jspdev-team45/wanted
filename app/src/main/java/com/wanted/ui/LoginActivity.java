@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private boolean remember;
-//    private int role = -1;
     private User user;
 
     private LoginTask loginTask;
@@ -83,13 +82,6 @@ public class LoginActivity extends AppCompatActivity {
         if (remember == true) {
             email = loginPreference.getString("email", "");
             password = loginPreference.getString("password", "");
-//            role = loginPreference.getInt("role", 0);
-//            if (role == Role.SEEKER) {
-//                user = new Seeker(null, email, password, role);
-//            } else {
-//                user = new Recruiter(null, email, password, role);
-//            }
-//            DataHolder.getInstance().setUser(user);
             loginTask = new LoginTask();
             loginTask.execute((Void) null);
         }
@@ -103,9 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (formValid() == false) return;
-//                User user = new Recruiter("Hehe", email, password, Role.RECRUITER);
-//                DataHolder.getInstance().setUser(user);
-//                jumpTo(MainActivity.class);
                 loginTask = new LoginTask();
                 loginTask.execute((Void) null);
             }
@@ -159,17 +148,10 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(LoginActivity.this, "Login...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             URL url = null;
             try {
                 url = new URL(new AddrUtil().getAddress("Login"));
@@ -199,7 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                 new DialogUtil().showError(LoginActivity.this, "Wrong password.");
             else {
                 User returnUser = (User) response.getContent();
-//                    role = returnUser.getRole();
                 DataHolder.getInstance().setUser(returnUser);
                 jumpTo(MainActivity.class);
             }
@@ -209,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putBoolean("remember", true);
                 editor.putString("email", email);
                 editor.putString("password", password);
-//                    editor.putInt("role", role);
                 editor.commit();
             }
 

@@ -51,6 +51,7 @@ import java.util.Date;
 
 /**
  * Created by xlin2
+ * Activity to show user resume
  */
 public class ResumeActivity extends AppCompatActivity {
 
@@ -92,7 +93,6 @@ public class ResumeActivity extends AppCompatActivity {
 
         findViews();
         addCards();
-        //addListeners();
 
     }
 
@@ -101,6 +101,9 @@ public class ResumeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Add cards that include user resume information
+     */
     private void addCards() {
         MaterialListAdapter adapter = resume.getAdapter();
         String name = user.getRealName() == null ? user.getName() : user.getRealName();
@@ -249,6 +252,10 @@ public class ResumeActivity extends AppCompatActivity {
         description = targetDescView.getText().toString();
     }
 
+    /**
+     * Check whether user inputs are valid
+     * @return
+     */
     private boolean formValid() {
         boolean cancel = false;
 
@@ -336,18 +343,15 @@ public class ResumeActivity extends AppCompatActivity {
         TextView textViewSD = new TextView(this);
         textViewSD.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
         textViewSD.setText(startDate);
-        //textViewSD.setWidth(10);
         textViewSD.setGravity(Gravity.CENTER);
         TextView textViewED = new TextView(this);
         textViewED.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
         textViewED.setText(endDate);
-        //textViewED.setWidth(10);
         textViewED.setGravity(Gravity.CENTER);
         TextView textViewDesc = new TextView(this);
         textViewDesc.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4f));
         textViewDesc.setText(description);
         textViewDesc.setGravity(Gravity.CENTER);
-        //textViewDesc.setWidth(60);
 
         tableRow.addView(textViewSD);
         tableRow.addView(textViewED);
@@ -383,8 +387,6 @@ public class ResumeActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(ResumeActivity.this, "Processing...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -409,7 +411,6 @@ public class ResumeActivity extends AppCompatActivity {
             pd.dismiss();
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             addExpTask = null;
-//            createTableRow();
             if (response == null) {
                 new DialogUtil().showError(ResumeActivity.this, "Unable to post.");
             } else {
@@ -444,8 +445,6 @@ public class ResumeActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Show the spinner and disable interaction
             pd = new DialogUtil().showProgress(ResumeActivity.this, "Processing...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

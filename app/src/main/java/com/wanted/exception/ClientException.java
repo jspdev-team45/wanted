@@ -22,6 +22,10 @@ public class ClientException extends Exception {
         this.errNo = errNo;
     }
 
+    /**
+     * Get error message
+     * @return error message string
+     */
     public String getErrMsg() {
         switch(errNo) {
             case 0:
@@ -39,6 +43,9 @@ public class ClientException extends Exception {
         this.errMsg = errMsg;
     }
 
+    /**
+     * Handle the exception and write the error into log file
+     */
     public void handle() {
         Log.e("Input Exception", this.toString());
         switch(errNo) {

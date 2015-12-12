@@ -31,6 +31,7 @@ import java.util.List;
  * Author: Junjian Xie
  * Email: junjianx@andrew.cmu.edu
  * Date: 15/11/6
+ * List adapters for follower list
  */
 public class ListAdapter extends BaseAdapter implements SectionIndexer {
     private List<User> data;
@@ -41,7 +42,6 @@ public class ListAdapter extends BaseAdapter implements SectionIndexer {
     public ListAdapter(Context context, List<User> data) {
         this.data = data;
         Collections.sort(this.data);
-//        Arrays.sort(this.data);
         inflater = LayoutInflater.from(context);
 
         options = new DisplayImageOptions.Builder()

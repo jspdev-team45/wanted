@@ -31,6 +31,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Created by xlin2 on 2015/11/13.
+ * Activity to add a new job information
+ */
 public class ApplicantsActivity extends AppCompatActivity {
     private MaterialListView applicantsListView;
 
@@ -111,8 +115,6 @@ public class ApplicantsActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // Disable interaction
             pd = new DialogUtil().showProgress(ApplicantsActivity.this, "Loading applicants list...");
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override

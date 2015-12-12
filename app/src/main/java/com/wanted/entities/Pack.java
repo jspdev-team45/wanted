@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * Created by xlin2 on 2015/11/13.
+ * This class stores information to be sent to the server
  */
 public class Pack implements Serializable {
     private static final long serialVersionUID = 1L;

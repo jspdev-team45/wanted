@@ -33,6 +33,7 @@ import java.net.URL;
 
 /**
  * Created by xlin2
+ * Activity to show all the details of a specific user
  */
 public class PeopleDetailActivity extends AppCompatActivity {
 

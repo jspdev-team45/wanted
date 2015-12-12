@@ -46,6 +46,7 @@ import java.util.ArrayList;
 
 /**
  * Created by xlin2
+ * People fragment used to show the list of all the people
  */
 public class PeopleFragment extends Fragment {
     private Context context;
@@ -92,7 +93,6 @@ public class PeopleFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_people, container, false);
             findViews(view);
             initViews();
-//        addCards();
             addListeners();
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,7 +110,6 @@ public class PeopleFragment extends Fragment {
         peopleLayoutManager = new LinearLayoutManager(context);
         peopleListView.setLayoutManager(peopleLayoutManager);
         peopleListView.setDrawingCacheEnabled(true);
-        //initPeopleList();
         firstRefresh();
     }
 
@@ -232,9 +231,6 @@ public class PeopleFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // Disable interaction
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -287,8 +283,6 @@ public class PeopleFragment extends Fragment {
         protected void onPreExecute() {
             // Disable interaction
             Toast.makeText(context, "Loading more...", Toast.LENGTH_LONG).show();
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
@@ -334,9 +328,6 @@ public class PeopleFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // Disable interaction
-//            ((Activity)context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
